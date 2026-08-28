@@ -134,6 +134,7 @@ class MetalHellsingerWorld(CachedRuleBuilderWorld):
                 "singular_destructible_locations_enabled",
                 "hells_destructible_locations_enabled",
                 "include_miscellaneous_checks",
+                "include_fury_combo_checks",
             )
         }
 

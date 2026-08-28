@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from BaseClasses import Location
 from rule_builder.field_resolvers import FromOption
 from rule_builder.options import OptionFilter
-from rule_builder.rules import CanReachRegion, Has, HasAll, HasAny, HasGroup, CanReachLocation
+from rule_builder.rules import CanReachRegion, Has, HasAll, HasAny, HasGroup
 from worlds.metal_hellsinger.options import (
     DestructibleAsUnlocks,
     HellsUnlocksAsProgressive,
@@ -471,39 +471,41 @@ def set_all_location_rules(world: MetalHellsingerWorld) -> None:
         elif location.name in world.location_name_groups["TormentGold"]:
             world.set_rule(location, (HAS_QUICK_RELOAD & HAS_ADVANCED_MOVEMENT & HAS_ANY_HEAL) | OUT_OF_LOGIC)
 
-    world.set_rule(world.get_location("Fury Combo - Styx Reload discovered"), (HAS_ANY_HELL & HAS_QUICK_RELOAD & HAS_DESTRUCTIBLE_HEALTH_CRYSTALS))
-    world.set_rule(world.get_location("Fury Combo - Hells's Heartbeat discovered"), (HAS_ANY_HELL & HAS_QUICK_RELOAD))
-    world.set_rule(world.get_location("Fury Combo - Basilisk Mode discovered"), (HAS_SOAR & HAS_ANY_HELL))
-    world.set_rule(world.get_location("Fury Combo - Double Hit and Run discovered"), (HAS_ANY_HELL & (HAS_DESTRUCTIBLE_AMMOSTASHES | HAS_DESTRUCTIBLE_HEALTH_CRYSTALS | (HAS_DESTRUCTIBLE_CHAOS_CRYSTALS & OUT_OF_LOGIC)) & HAS_DASH))
-    world.set_rule(world.get_location("Fury Combo - Shatter Two discovered"), (HAS_ANY_HELL & (HAS_DESTRUCTIBLE_AMMOSTASHES | HAS_DESTRUCTIBLE_HEALTH_CRYSTALS | (HAS_DESTRUCTIBLE_CHAOS_CRYSTALS & OUT_OF_LOGIC))))
-    world.set_rule(world.get_location("Fury Combo - Devil's Flight discovered"), (HAS_ANY_HELL & HAS_DASH & HAS_SOAR & HAS_JUMP))
-    world.set_rule(world.get_location("Fury Combo - Double Slaughter discovered"), (HAS_ANY_HELL & HAS_SLAUGHTER))
-    world.set_rule(world.get_location("Fury Combo - Chaos and Slaughter discovered"), (HAS_CHAOS_ACCESS & HAS_DESTRUCTIBLE_CHAOS_CRYSTALS & HAS_SLAUGHTER))
-    world.set_rule(world.get_location("Fury Combo - Unholy Mess discovered"), (HAS_ANY_HELL & HAS_SLAUGHTER))
-    world.set_rule(world.get_location("Fury Combo - Five Endings discovered"), (((HAS_CHAOS_ACCESS & HAS_DESTRUCTIBLE_CHAOS_CRYSTALS) | HAS_PAZ) & (HasGroup("Weapon", count=3) | OUT_OF_LOGIC)) | (HasGroup("Weapon", count=1) & OUT_OF_LOGIC))
-    world.set_rule(world.get_location("Fury Combo - Slaughter and Kill discovered"), (HAS_ANY_HELL & HAS_SLAUGHTER))
-    world.set_rule(world.get_location("Fury Combo - Chaos Flight discovered"), (HAS_CHAOS_ACCESS & HAS_SOAR & HAS_JUMP & HAS_DESTRUCTIBLE_CHAOS_CRYSTALS))
-    world.set_rule(world.get_location("Fury Combo - Death from Above discovered"), (HAS_ANY_HELL & HAS_SOAR & HAS_SLAUGHTER))
-    world.set_rule(world.get_location("Fury Combo - Lethal Cycle discovered"), (HAS_ANY_HELL & HasGroup("Weapon", count=3)))
-    world.set_rule(world.get_location("Fury Combo - Kill Trio discovered"), HAS_ANY_HELL)
-    world.set_rule(world.get_location("Fury Combo - Triple Dash discovered"), (HAS_ANY_HELL & HAS_DASH))
 
-    world.set_rule(world.get_location("Tutorial - Marionette discovered"), HAS_TUTORIAL & HAS_BASE_MOVEMENT)
-    world.set_rule(world.get_location("Voke/Stygia - Cambion discovered"), HAS_VOKE | HAS_STYGIA)
-    world.set_rule(world.get_location("Voke - Behemoth discovered"), CanReachRegion("Voke Arena4"))
-    world.set_rule(world.get_location("Stygia - Stalker discovered"), CanReachRegion("Stygia Arena3"))
-    world.set_rule(world.get_location("Yhelm - Eyeless discovered"), CanReachRegion("Yhelm Arena2"))
-    world.set_rule(world.get_location("Incaustis - Hierophant discovered"), CanReachRegion("Incaustis Arena2"))
-    world.set_rule(world.get_location("Gehenna - Lesser Seraph discovered"), CanReachRegion("Gehenna Arena2"))
-    world.set_rule(world.get_location("Yhelm - Shield Cambion discovered"), HAS_YHELM)
-    world.set_rule(world.get_location("Incaustis - Siege Behemoth discovered"), CanReachRegion("Incaustis Arena4"))
-    world.set_rule(world.get_location("Nihil - Void Stalker discovered"), CanReachRegion("Nihil Arena3"))
-    world.set_rule(world.get_location("Voke (Archdevil) - Annihilator Seraph discovered"), CanReachRegion("Voke Arena4") & (Has("Archdevil") | Has("Regressive Difficulty")))
+    world.set_rule(world.get_location("Bestiary Entry - Marionette discovered"), HAS_TUTORIAL & HAS_BASE_MOVEMENT)
+    world.set_rule(world.get_location("Bestiary Entry - Cambion discovered"), HAS_VOKE | HAS_STYGIA)
+    world.set_rule(world.get_location("Bestiary Entry - Behemoth discovered"), CanReachRegion("Voke Arena4") | CanReachRegion("Stygia Arena2"))
+    world.set_rule(world.get_location("Bestiary Entry - Stalker discovered"), CanReachRegion("Stygia Arena3"))
+    world.set_rule(world.get_location("Bestiary Entry - Eyeless discovered"), CanReachRegion("Yhelm Arena2"))
+    world.set_rule(world.get_location("Bestiary Entry - Hierophant discovered"), CanReachRegion("Incaustis Arena2"))
+    world.set_rule(world.get_location("Bestiary Entry - Lesser Seraph discovered"), CanReachRegion("Gehenna Arena2"))
+    world.set_rule(world.get_location("Bestiary Entry - Shield Cambion discovered"), HAS_YHELM)
+    world.set_rule(world.get_location("Bestiary Entry - Siege Behemoth discovered"), CanReachRegion("Incaustis Arena4"))
+    world.set_rule(world.get_location("Bestiary Entry - Void Stalker discovered"), CanReachRegion("Nihil Arena3"))
+    world.set_rule(world.get_location("Bestiary Entry - Annihilator Seraph discovered"), CanReachRegion("Voke Arena4") & (Has("Archdevil") | Has("Regressive Difficulty")))
 
     world.set_rule(world.get_location("Stygia - Next Multiplier in Arena 1 on pillar"), HAS_BASE_MOVEMENT)
     world.set_rule(world.get_location("Nihil - Max Multiplier in Arena 1"), HAS_BASE_MOVEMENT)
     world.set_rule(world.get_location("Sheol - Next Multiplier in Arena 2 on back Pillar"), HAS_BASE_MOVEMENT)
     world.set_rule(world.get_location("Sheol - Next Multiplier in Arena 3"), (HAS_DASH | HAS_DOUBLE_JUMP) | JUMP_OUT_OF_LOGIC)
+
+    if(world.options.include_fury_combo_checks):
+        world.set_rule(world.get_location("Fury Combo - Styx Reload discovered"), (HAS_ANY_HELL & HAS_QUICK_RELOAD & HAS_DESTRUCTIBLE_HEALTH_CRYSTALS))
+        world.set_rule(world.get_location("Fury Combo - Hells's Heartbeat discovered"), (HAS_ANY_HELL & HAS_QUICK_RELOAD))
+        world.set_rule(world.get_location("Fury Combo - Basilisk Mode discovered"), (HAS_SOAR & HAS_ANY_HELL))
+        world.set_rule(world.get_location("Fury Combo - Double Hit and Run discovered"), (HAS_ANY_HELL & (HAS_DESTRUCTIBLE_AMMOSTASHES | HAS_DESTRUCTIBLE_HEALTH_CRYSTALS | (HAS_DESTRUCTIBLE_CHAOS_CRYSTALS & OUT_OF_LOGIC)) & HAS_DASH))
+        world.set_rule(world.get_location("Fury Combo - Shatter Two discovered"), (HAS_ANY_HELL & (HAS_DESTRUCTIBLE_AMMOSTASHES | HAS_DESTRUCTIBLE_HEALTH_CRYSTALS | (HAS_DESTRUCTIBLE_CHAOS_CRYSTALS & OUT_OF_LOGIC))))
+        world.set_rule(world.get_location("Fury Combo - Devil's Flight discovered"), (HAS_ANY_HELL & HAS_DASH & HAS_SOAR & HAS_JUMP))
+        world.set_rule(world.get_location("Fury Combo - Double Slaughter discovered"), (HAS_ANY_HELL & HAS_SLAUGHTER))
+        world.set_rule(world.get_location("Fury Combo - Chaos and Slaughter discovered"), (HAS_CHAOS_ACCESS & HAS_DESTRUCTIBLE_CHAOS_CRYSTALS & HAS_SLAUGHTER))
+        world.set_rule(world.get_location("Fury Combo - Unholy Mess discovered"), (HAS_ANY_HELL & HAS_SLAUGHTER))
+        world.set_rule(world.get_location("Fury Combo - Five Endings discovered"), (((HAS_CHAOS_ACCESS & HAS_DESTRUCTIBLE_CHAOS_CRYSTALS) | HAS_PAZ) & (HasGroup("Weapon", count=3) | OUT_OF_LOGIC)) | (HasGroup("Weapon", count=1) & OUT_OF_LOGIC))
+        world.set_rule(world.get_location("Fury Combo - Slaughter and Kill discovered"), (HAS_ANY_HELL & HAS_SLAUGHTER))
+        world.set_rule(world.get_location("Fury Combo - Chaos Flight discovered"), (HAS_CHAOS_ACCESS & HAS_SOAR & HAS_JUMP & HAS_DESTRUCTIBLE_CHAOS_CRYSTALS))
+        world.set_rule(world.get_location("Fury Combo - Death from Above discovered"), (HAS_ANY_HELL & HAS_SOAR & HAS_SLAUGHTER))
+        world.set_rule(world.get_location("Fury Combo - Lethal Cycle discovered"), (HAS_ANY_HELL & HasGroup("Weapon", count=3)))
+        world.set_rule(world.get_location("Fury Combo - Kill Trio discovered"), HAS_ANY_HELL)
+        world.set_rule(world.get_location("Fury Combo - Triple Dash discovered"), (HAS_ANY_HELL & HAS_DASH))
 
     if(world.options.randomized_boons_enabled):
         world.set_rule(world.get_location("Voke - Boon Completion"), CanReachRegion("Voke Boss"))

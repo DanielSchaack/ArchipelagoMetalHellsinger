@@ -495,6 +495,16 @@ class FillerItemsDistribution(ItemDict):
 
 # ---
 
+class IncludeFuryComboChecks(Toggle):
+    """
+    If enabled, adds the first time activations of each Fury Combo as Checks.
+
+    This includes such actions as Triple Dash, Slaughter and Kill, Five Endings and so on.
+    """
+
+    display_name = "Enable Fury Combo First Time Activations as Checks"
+
+
 class IncludeTormentMedaillonsChecks(DefaultOnToggle):
     """
     Includes the individual medals on each Torment as locations.
@@ -662,6 +672,7 @@ class MetalHellsingerOptions(PerGameCommonOptions):
     singular_destructible_locations_enabled: SingularDestructibleLocationsEnabled
     hells_destructible_locations_enabled: HellsDestructibleLocationsEnabled
     include_miscellaneous_checks: IncludeMiscellaneousChecks
+    include_fury_combo_checks: IncludeFuryComboChecks
 
 
 option_groups = [
@@ -731,6 +742,7 @@ option_groups = [
             IncludeSecretMultiplierChecks,
             IncludeCoatOfArmsChecks,
             IncludeMiscellaneousChecks,
+            IncludeFuryComboChecks,
             DestructibleLocationsEnabled,
             SingularDestructibleLocationsEnabled,
             HellsDestructibleLocationsEnabled,
