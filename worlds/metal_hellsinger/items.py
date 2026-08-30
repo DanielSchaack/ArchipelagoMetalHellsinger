@@ -2,7 +2,12 @@ from collections import Counter
 from typing import TYPE_CHECKING, NamedTuple
 
 from BaseClasses import Item, ItemClassification
-from worlds.metal_hellsinger.options import MetalHellsingerOptions, WinCondition, IncludeProgressiveAnguishGateSkips, FillerItemsDistribution
+from worlds.metal_hellsinger.options import (
+    FillerItemsDistribution,
+    IncludeProgressiveAnguishGateSkips,
+    MetalHellsingerOptions,
+    WinCondition,
+)
 
 if TYPE_CHECKING:
     from . import MetalHellsingerWorld
@@ -33,7 +38,7 @@ def get_refined_classification(options: MetalHellsingerOptions, group: str, name
     if group == "Outfit" and not options.include_section_clears_with_outfits_checks:
         classification = ItemClassification.useful
     elif group == "Song" and not options.include_section_clears_with_songs_checks and name != "No Tomorrow":
-        classification = ItemClassification.filler
+        classification = ItemClassification.useful
     elif not options.include_miscellaneous_checks and (name == "The Red Right Hand Ultimate" or name == "Telos Ultimate"):
         classification = ItemClassification.useful
     return classification
@@ -134,7 +139,8 @@ def create_hells_item_pool(world: MetalHellsingerWorld) -> tuple[list[str], int]
             world.push_precollected(world.create_item("Regressive Difficulty"))
             required_items_dict["Regressive Difficulty"] = 3
         else:
-            option = option_to_difficulty[world.options.starting_difficulty.value]
+            required_difficulty = world.options.starting_difficulty.value if world.options.starting_difficulty.value >= world.options.minimal_difficulty.value else world.options.minimal_difficulty.value
+            option = option_to_difficulty[required_difficulty]
             world.push_precollected(world.create_item(option))
             available_diff = list(option_to_difficulty.values())
             available_diff.remove(option)
@@ -142,16 +148,15 @@ def create_hells_item_pool(world: MetalHellsingerWorld) -> tuple[list[str], int]
 
         required_items.append(item_table["Tutorial"])
 
-        if world.options.randomized_hells_enabled:
-            if world.options.hells_unlocks_as_progressive:
-                world.push_precollected(world.create_item("Progressive Hells"))
-                required_items_dict["Progressive Hells"] = 7
-            else:
-                option = option_to_hells[world.options.starting_hells.value]
-                world.push_precollected(world.create_item(option))
-                available_hells = list(option_to_hells.values())
-                available_hells.remove(option)
-                required_items.extend(item_table[hells] for hells in available_hells)
+        if world.options.hells_unlocks_as_progressive:
+            world.push_precollected(world.create_item("Progressive Hells"))
+            required_items_dict["Progressive Hells"] = 7
+        else:
+            option = option_to_hells[world.options.starting_hells.value]
+            world.push_precollected(world.create_item(option))
+            available_hells = list(option_to_hells.values())
+            available_hells.remove(option)
+            required_items.extend(item_table[hells] for hells in available_hells)
 
         if world.options.randomized_torments_enabled:
             if world.options.torment_unlocks_as_progressive:
@@ -465,7 +470,6 @@ item_table: dict[str, ItemData] = {
     "Sheol": ItemData("Sheol", 58, "Level", ItemClassification.progression, 1),
     "Tutorial": ItemData("Tutorial", 59, "Level", ItemClassification.progression, 1),
     "Coat of Arms": ItemData("Coat of Arms", 60, "Collectible", ItemClassification.progression, 32),
-    "Coat of Arms Fill": ItemData("Coat of Arms Fill", 61, "Collectible", ItemClassification.useful, 1),
     "Garden of Chronos": ItemData("Garden of Chronos", 62, "Level", ItemClassification.progression, 1),
     "Calamity": ItemData("Calamity", 63, "Level", ItemClassification.progression, 1),
     "Demonitorium": ItemData("Demonitorium", 64, "Level", ItemClassification.progression, 1),

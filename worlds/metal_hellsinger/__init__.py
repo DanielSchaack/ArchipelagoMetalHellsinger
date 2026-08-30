@@ -87,7 +87,7 @@ class MetalHellsingerWorld(CachedRuleBuilderWorld):
                 "required_hells_completion",
                 "regressive_difficulty",
                 "starting_difficulty",
-                "randomized_hells_enabled",
+                "minimal_difficulty",
                 "hells_unlocks_as_progressive",
                 "require_aspect_for_boss_arena",
                 "starting_hells",
@@ -99,6 +99,7 @@ class MetalHellsingerWorld(CachedRuleBuilderWorld):
                 "require_no_tomorrow_for_sheol",
                 "require_coat_of_arms_for_sheol",
                 "required_coat_of_arms_for_sheol",
+                "archdevil_enemies_enabled",
                 "randomized_boons_enabled",
                 "randomized_dash_enabled",
                 "randomized_jump_enabled",
@@ -134,6 +135,8 @@ class MetalHellsingerWorld(CachedRuleBuilderWorld):
                 "singular_destructible_locations_enabled",
                 "hells_destructible_locations_enabled",
                 "include_miscellaneous_checks",
+                "include_first_slaughter_checks",
+                "include_fury_combo_checks",
             )
         }
 

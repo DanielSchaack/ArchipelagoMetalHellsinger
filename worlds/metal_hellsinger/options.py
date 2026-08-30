@@ -65,12 +65,25 @@ class StartingDifficulty(Choice):
     default = 1
 
 
-class RandomizedHellsEnabled(DefaultOnToggle):
+class MinimalDifficulty(Choice):
     """
-    Includes the Hells as unlockables, otherwise all hells are accessable from the start.
+    Collecting locations requires atleast this difficulty.
+    If the starting difficulty is below the required one, the needed difficulty will be given instead.
+    Logic respects this option.
+
+    - Lamb = Easy
+    - Goat = Medium
+    - Beast = Hard
+    - Archdevil = Very Hard
     """
 
-    display_name = "Randomized Hells"
+    display_name = "Minimally Required Difficulty"
+    option_lamb = 0
+    option_goat = 1
+    option_beast = 2
+    option_archdevil = 3
+    default = 0
+
 
 
 class StartingHells(Choice):
@@ -91,7 +104,7 @@ class StartingHells(Choice):
 
 class HellsUnlocksAsProgressive(Toggle):
     """
-    When Hells are included as unlockables, changes these to be progressive instead of individual unlocks.
+    Hells are included as progressive instead of individual unlocks.
 
     The order of Hells is: Voke - Stygia - Yhelm - Incaustis - Gehenna - Nihil - Acheron - Sheol
     Tutorial is its own item.
@@ -195,6 +208,14 @@ class RequiredCoatOfArmsForSheol(Range):
 
 
 # ---
+
+class ArchdevilEnemiesEnabled(Toggle):
+    """
+    If enabled, adds all Archdevil enemy spawn _on top of_ the regular enemy spawns, resulting in more difficult encounters.
+    """
+
+    display_name = "Enable Archdevil Enemy Spawns in all Difficulties"
+
 
 class RandomizedBoonsEnabled(Toggle):
     """
@@ -495,6 +516,16 @@ class FillerItemsDistribution(ItemDict):
 
 # ---
 
+class IncludeFuryComboChecks(Toggle):
+    """
+    If enabled, adds the first time activations of each Fury Combo as Checks.
+
+    This includes such actions as Triple Dash, Slaughter and Kill, Five Endings and so on.
+    """
+
+    display_name = "Enable Fury Combo First Time Activations as Checks"
+
+
 class IncludeTormentMedaillonsChecks(DefaultOnToggle):
     """
     Includes the individual medals on each Torment as locations.
@@ -575,6 +606,14 @@ class IncludeMiscellaneousChecks(Toggle):
     display_name = "Enable Miscellaneous First Time Actions as Checks"
 
 
+class IncludeFirstSlaughterChecks(Toggle):
+    """
+    If enabled, adds the first time slaughter kill of each enemy as a check.
+    """
+
+    display_name = "Enable First Time Slaughter Kills as Checks"
+
+
 # class HellsLevelSpeedEnabled(Toggle):
 #     """"""
 #     display_name = ""
@@ -615,7 +654,7 @@ class MetalHellsingerOptions(PerGameCommonOptions):
     required_hells_completion: RequiredHellsCompletion
     regressive_difficulty: RegressiveDifficulty
     starting_difficulty: StartingDifficulty
-    randomized_hells_enabled: RandomizedHellsEnabled
+    minimal_difficulty: MinimalDifficulty
     hells_unlocks_as_progressive: HellsUnlocksAsProgressive
     require_aspect_for_boss_arena: RequireAspectForBossArena
     starting_hells: StartingHells
@@ -627,6 +666,7 @@ class MetalHellsingerOptions(PerGameCommonOptions):
     require_no_tomorrow_for_sheol: RequireNoTomorrowForSheol
     require_coat_of_arms_for_sheol: RequireCoatOfArmsForSheol
     required_coat_of_arms_for_sheol: RequiredCoatOfArmsForSheol
+    archdevil_enemies_enabled: ArchdevilEnemiesEnabled
     randomized_boons_enabled: RandomizedBoonsEnabled
     randomized_dash_enabled: RandomizedDashEnabled
     randomized_jump_enabled: RandomizedJumpEnabled
@@ -662,6 +702,8 @@ class MetalHellsingerOptions(PerGameCommonOptions):
     singular_destructible_locations_enabled: SingularDestructibleLocationsEnabled
     hells_destructible_locations_enabled: HellsDestructibleLocationsEnabled
     include_miscellaneous_checks: IncludeMiscellaneousChecks
+    include_first_slaughter_checks: IncludeFirstSlaughterChecks
+    include_fury_combo_checks: IncludeFuryComboChecks
 
 
 option_groups = [
@@ -678,12 +720,13 @@ option_groups = [
     OptionGroup(
         "Hells and Torments Options",
         [
-            RandomizedHellsEnabled,
             HellsUnlocksAsProgressive,
             StartingHells,
             RequireAspectForBossArena,
             RegressiveDifficulty,
             StartingDifficulty,
+            MinimalDifficulty,
+            ArchdevilEnemiesEnabled,
             RandomizedTormentsEnabled,
             TormentUnlocksAsProgressive,
             RequireStageForTorments,
@@ -731,6 +774,8 @@ option_groups = [
             IncludeSecretMultiplierChecks,
             IncludeCoatOfArmsChecks,
             IncludeMiscellaneousChecks,
+            IncludeFirstSlaughterChecks,
+            IncludeFuryComboChecks,
             DestructibleLocationsEnabled,
             SingularDestructibleLocationsEnabled,
             HellsDestructibleLocationsEnabled,
