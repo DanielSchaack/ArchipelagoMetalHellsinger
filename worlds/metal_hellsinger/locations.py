@@ -446,7 +446,6 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
     "Yhelm Arena3": {
         "Yhelm - Finished forced Encounter 2": LocationData(52, "AnguishGate"),
         "Yhelm - Next Multiplier in Arena 3": LocationData(58, "NextMultiplier"),
-        "Yhelm - Max Multiplier in Arena 3": LocationData(59, "MaxMultiplier"),
         "Yhelm - Coat of Arms in Arena 3": LocationData(64, "CoatOfArms"),
         "Yhelm - Ammostash 13": LocationData(461, "Ammostash"),
         "Yhelm - Health Crystal 8": LocationData(480, "HealthCrystal"),
@@ -460,6 +459,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Yhelm - Arena 3 Destructible Completion": LocationData(1049, "ArenaDestructibleCompletion"),
     },
     "Yhelm Arena4": {
+        "Yhelm - Max Multiplier in Arena 4": LocationData(59, "MaxMultiplier"),
         "Yhelm - Finished forced Encounter 3": LocationData(53, "AnguishGate"),
         "Yhelm - Secret Max Multiplier": LocationData(61, "SecretMultiplier"),
         "Yhelm - Coat of Arms in Arena 4": LocationData(62, "CoatOfArms"),
