@@ -1,7 +1,7 @@
-from worlds.metal_hellsinger.items import MetalHellsingerItem
 from typing import TYPE_CHECKING, NamedTuple
 
 from BaseClasses import Location
+from worlds.metal_hellsinger.items import MetalHellsingerItem
 from worlds.metal_hellsinger.options import WinCondition
 
 if TYPE_CHECKING:
@@ -72,8 +72,8 @@ def create_all_locations(world: "MetalHellsingerWorld"):
             "NextMultiplier",
             "MaxMultiplier",
             "LevelCompletion",
-            "Codex",
             "Bestiary",
+            "FirstKill",
         ]
 
         if world.options.include_section_clears_with_weapons_checks:
@@ -152,6 +152,12 @@ def create_all_locations(world: "MetalHellsingerWorld"):
             if(world.options.randomized_jump_enabled):
                 location_id = get_location_names_with_ids(["First Miscellaneous - Infinite Jump"])
                 world.get_region("Global").add_locations(location_id, MetalHellsingerLocation)
+
+        if world.options.include_fury_combo_checks:
+            all_locationtypes_to_add.append("Codex")
+
+        if world.options.include_first_slaughter_checks:
+            all_locationtypes_to_add.append("FirstSlaughter")
 
         if world.options.destructible_locations_enabled and not world.options.singular_destructible_locations_enabled:
             all_locationtypes_to_add.append("ArenaDestructibleCompletion")
@@ -284,7 +290,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Voke - Complete Speed Challenge": LocationData(248, "LevelSpeed"),
         "Voke - Complete Health Crystal Destruction": LocationData(249, "LevelHealthCrystalCompletion"),
         "Voke - Complete Chaos Crystal Destruction": LocationData(250, "LevelChaosCrystalCompletion"),
-        "Anger Aspect: Voke discovered": LocationData(302, "Bestiary"),
+        "Bestiary Entry - Anger Aspect: Voke": LocationData(302, "Bestiary"),
         "Voke - Ammostash 14": LocationData(333, "Ammostash"),
         "Voke - Ammostash 15": LocationData(334, "Ammostash"),
         "Voke - Ammostash 16": LocationData(335, "Ammostash"),
@@ -302,6 +308,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Voke - Boss Health Crystal Destruction": LocationData(1018, "ArenaHealthCrystalCompletion"),
         "Voke - Boss Chaos Crystal Destruction": LocationData(1019, "ArenaChaosCrystalCompletion"),
         "Voke - Boss Destructible Completion": LocationData(1020, "ArenaDestructibleCompletion"),
+        "Hells First Kill - Anger Aspect: Voke": LocationData(1241, "FirstKill"),
     },
     "Stygia Arena1": {
         "Stygia - Weapon Pickup in Arena 1": LocationData(23, "WeaponPickup"),
@@ -402,7 +409,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Stygia - Complete Ammostash Destruction": LocationData(251, "LevelAmmostashCompletion"),
         "Stygia - Complete Speed Challenge": LocationData(252, "LevelSpeed"),
         "Stygia - Complete Health Crystal Destruction": LocationData(253, "LevelHealthCrystalCompletion"),
-        "Charged Aspect: Stygia discovered": LocationData(303, "Bestiary"),
+        "Bestiary Entry - Charged Aspect: Stygia": LocationData(303, "Bestiary"),
         "Stygia - Ammostash 20": LocationData(394, "Ammostash"),
         "Stygia - Ammostash 21": LocationData(395, "Ammostash"),
         "Stygia - Ammostash 22": LocationData(396, "Ammostash"),
@@ -415,6 +422,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Stygia - Boss Ammostash Destruction": LocationData(1036, "ArenaAmmostashCompletion"),
         "Stygia - Boss Health Crystal Destruction": LocationData(1037, "ArenaHealthCrystalCompletion"),
         "Stygia - Boss Destructible Completion": LocationData(1038, "ArenaDestructibleCompletion"),
+        "Hells First Kill - Charged Aspect: Stygia": LocationData(1242, "FirstKill"),
     },
     "Yhelm Arena2": {
         "Yhelm - Weapon Pickup in Arena 2": LocationData(50, "WeaponPickup"),
@@ -486,7 +494,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Yhelm - Complete Speed Challenge": LocationData(256, "LevelSpeed"),
         "Yhelm - Complete Health Crystal Destruction": LocationData(257, "LevelHealthCrystalCompletion"),
         "Yhelm - Complete Chaos Crystal Destruction": LocationData(258, "LevelChaosCrystalCompletion"),
-        "Fortress Aspect: Yhelm discovered": LocationData(304, "Bestiary"),
+        "Bestiary Entry - Fortress Aspect: Yhelm": LocationData(304, "Bestiary"),
         "Yhelm - Ammostash 21": LocationData(469, "Ammostash"),
         "Yhelm - Ammostash 22": LocationData(470, "Ammostash"),
         "Yhelm - Ammostash 23": LocationData(471, "Ammostash"),
@@ -506,6 +514,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Yhelm - Boss Health Crystal Destruction": LocationData(1055, "ArenaHealthCrystalCompletion"),
         "Yhelm - Boss Chaos Crystal Destruction": LocationData(1056, "ArenaChaosCrystalCompletion"),
         "Yhelm - Boss Destructible Completion": LocationData(1057, "ArenaDestructibleCompletion"),
+        "Hells First Kill - Fortress Aspect: Yhelm": LocationData(1243, "FirstKill"),
     },
     "Yhelm Arena1": {
         "Yhelm - Next Multiplier in Arena 1": LocationData(55, "NextMultiplier"),
@@ -603,7 +612,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Incaustis - Complete Ammostash Destruction": LocationData(259, "LevelAmmostashCompletion"),
         "Incaustis - Complete Speed Challenge": LocationData(260, "LevelSpeed"),
         "Incaustis - Complete Health Crystal Destruction": LocationData(261, "LevelHealthCrystalCompletion"),
-        "Infernal Fury Aspect: Incaustis discovered": LocationData(305, "Bestiary"),
+        "Bestiary Entry - Infernal Fury Aspect: Incaustis": LocationData(305, "Bestiary"),
         "Incaustis - Ammostash 23": LocationData(537, "Ammostash"),
         "Incaustis - Ammostash 24": LocationData(538, "Ammostash"),
         "Incaustis - Ammostash 25": LocationData(539, "Ammostash"),
@@ -616,6 +625,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Incaustis - Boss Ammostash Destruction": LocationData(1074, "ArenaAmmostashCompletion"),
         "Incaustis - Boss Health Crystal Destruction": LocationData(1075, "ArenaHealthCrystalCompletion"),
         "Incaustis - Boss Destructible Completion": LocationData(1076, "ArenaDestructibleCompletion"),
+        "Hells First Kill - Infernal Fury Aspect: Incaustis": LocationData(1244, "FirstKill"),
     },
     "Incaustis Arena1": {
         "Incaustis - Next Multiplier in Arena 1": LocationData(72, "NextMultiplier"),
@@ -705,7 +715,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Gehenna - Complete Ammostash Destruction": LocationData(263, "LevelAmmostashCompletion"),
         "Gehenna - Complete Speed Challenge": LocationData(264, "LevelSpeed"),
         "Gehenna - Complete Health Crystal Destruction": LocationData(265, "LevelHealthCrystalCompletion"),
-        "Hellstorm Aspect: Gehenna discovered": LocationData(306, "Bestiary"),
+        "Bestiary Entry - Hellstorm Aspect: Gehenna": LocationData(306, "Bestiary"),
         "Gehenna - Ammostash 16": LocationData(608, "Ammostash"),
         "Gehenna - Ammostash 17": LocationData(609, "Ammostash"),
         "Gehenna - Ammostash 18": LocationData(610, "Ammostash"),
@@ -717,6 +727,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Gehenna - Boss Ammostash Destruction": LocationData(1093, "ArenaAmmostashCompletion"),
         "Gehenna - Boss Health Crystal Destruction": LocationData(1094, "ArenaHealthCrystalCompletion"),
         "Gehenna - Boss Destructible Completion": LocationData(1095, "ArenaDestructibleCompletion"),
+        "Hells First Kill - Hellstorm Aspect: Gehenna": LocationData(1245, "FirstKill"),
     },
     "Gehenna Arena1": {
         "Gehenna - Next Multiplier in Arena 1": LocationData(87, "NextMultiplier"),
@@ -797,7 +808,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Nihil - Complete Speed Challenge": LocationData(268, "LevelSpeed"),
         "Nihil - Complete Health Crystal Destruction": LocationData(269, "LevelHealthCrystalCompletion"),
         "Nihil - Complete Chaos Crystal Destruction": LocationData(270, "LevelChaosCrystalCompletion"),
-        "Doppelganger Aspect: Nihil discovered": LocationData(307, "Bestiary"),
+        "Bestiary Entry - Doppelganger Aspect: Nihil": LocationData(307, "Bestiary"),
         "Nihil - Ammostash 18": LocationData(670, "Ammostash"),
         "Nihil - Ammostash 19": LocationData(671, "Ammostash"),
         "Nihil - Ammostash 20": LocationData(672, "Ammostash"),
@@ -813,6 +824,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Nihil - Boss Health Crystal Destruction": LocationData(1111, "ArenaHealthCrystalCompletion"),
         "Nihil - Boss Chaos Crystal Destruction": LocationData(1112, "ArenaChaosCrystalCompletion"),
         "Nihil - Boss Destructible Completion": LocationData(1113, "ArenaDestructibleCompletion"),
+        "Hells First Kill - Doppelganger Aspect: Nihil": LocationData(1246, "FirstKill"),
     },
     "Nihil Arena1": {
         "Nihil - Max Multiplier in Arena 1": LocationData(105, "MaxMultiplier"),
@@ -910,7 +922,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Acheron - Completed the Hell": LocationData(139, "LevelCompletion"),
         "Acheron - Complete Speed Challenge": LocationData(272, "LevelSpeed"),
         "Acheron - Complete Health Crystal Destruction": LocationData(273, "LevelHealthCrystalCompletion"),
-        "Wheel Aspect: Acheron discovered": LocationData(308, "Bestiary"),
+        "Bestiary Entry - Wheel Aspect: Acheron": LocationData(308, "Bestiary"),
         "Acheron - Health Crystal 18": LocationData(751, "HealthCrystal"),
         "Acheron - Health Crystal 19": LocationData(752, "HealthCrystal"),
         "Acheron - Health Crystal 20": LocationData(753, "HealthCrystal"),
@@ -918,6 +930,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Acheron - Health Crystal 22": LocationData(755, "HealthCrystal"),
         "Acheron - Boss Health Crystal Destruction": LocationData(1130, "ArenaHealthCrystalCompletion"),
         "Acheron - Boss Destructible Completion": LocationData(1131, "ArenaDestructibleCompletion"),
+        "Hells First Kill - Wheel Aspect: Acheron": LocationData(1247, "FirstKill"),
     },
     "Acheron Arena1": {
         "Acheron - Next Multiplier before Arena 1": LocationData(118, "NextMultiplier"),
@@ -1015,7 +1028,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Sheol - Finished forced Encounter 4": LocationData(143, "AnguishGate"),
         "Sheol - Max Multiplier in Boss Arena": LocationData(150, "MaxMultiplier"),
         "Sheol - Completed the Hell": LocationData(156, "LevelCompletion"),
-        "Red Judge - Worldbreaker: Sheol discovered": LocationData(309, "Bestiary"),
+        "Bestiary Entry - Red Judge - Worldbreaker: Sheol": LocationData(309, "Bestiary"),
         "Sheol - Ammostash 22": LocationData(803, "Ammostash"),
         "Sheol - Ammostash 23": LocationData(804, "Ammostash"),
         "Sheol - Ammostash 24": LocationData(805, "Ammostash"),
@@ -1036,6 +1049,7 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Sheol - Boss Ammostash Destruction": LocationData(1149, "ArenaAmmostashCompletion"),
         "Sheol - Boss Health Crystal Destruction": LocationData(1150, "ArenaHealthCrystalCompletion"),
         "Sheol - Boss Destructible Completion": LocationData(1151, "ArenaDestructibleCompletion"),
+        "Hells First Kill - Red Judge - Worldbreaker: Sheol": LocationData(1248, "FirstKill"),
     },
     "Sheol Arena1": {
         "Sheol - Next Multiplier before Arena 1": LocationData(144, "NextMultiplier"),
@@ -1082,17 +1096,17 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Fury Combo - Kill Trio discovered": LocationData(289, "Codex"),
         "Fury Combo - Triple Dash discovered": LocationData(290, "Codex"),
         "Fury Combo - Styx Reload discovered": LocationData(1211, "Codex"),
-        "Bestiary Entry - Marionette discovered": LocationData(291, "Bestiary"),
-        "Bestiary Entry - Cambion discovered": LocationData(292, "Bestiary"),
-        "Bestiary Entry - Behemoth discovered": LocationData(293, "Bestiary"),
-        "Bestiary Entry - Stalker discovered": LocationData(294, "Bestiary"),
-        "Bestiary Entry - Eyeless discovered": LocationData(295, "Bestiary"),
-        "Bestiary Entry - Hierophant discovered": LocationData(296, "Bestiary"),
-        "Bestiary Entry - Lesser Seraph discovered": LocationData(297, "Bestiary"),
-        "Bestiary Entry - Shield Cambion discovered": LocationData(298, "Bestiary"),
-        "Bestiary Entry - Siege Behemoth discovered": LocationData(299, "Bestiary"),
-        "Bestiary Entry - Void Stalker discovered": LocationData(300, "Bestiary"),
-        "Bestiary Entry - Annihilator Seraph discovered": LocationData(301, "Bestiary"),
+        "Bestiary Entry - Marionette": LocationData(291, "Bestiary"),
+        "Bestiary Entry - Cambion": LocationData(292, "Bestiary"),
+        "Bestiary Entry - Behemoth": LocationData(293, "Bestiary"),
+        "Bestiary Entry - Stalker": LocationData(294, "Bestiary"),
+        "Bestiary Entry - Eyeless": LocationData(295, "Bestiary"),
+        "Bestiary Entry - Hierophant": LocationData(296, "Bestiary"),
+        "Bestiary Entry - Lesser Seraph": LocationData(297, "Bestiary"),
+        "Bestiary Entry - Shield Cambion": LocationData(298, "Bestiary"),
+        "Bestiary Entry - Siege Behemoth": LocationData(299, "Bestiary"),
+        "Bestiary Entry - Void Stalker": LocationData(300, "Bestiary"),
+        "Bestiary Entry - Annihilator Seraph": LocationData(301, "Bestiary"),
         "First Miscellaneous - Ammostash": LocationData(1152, "FirstMiscellaneous"),
         "First Miscellaneous - Health Crystal": LocationData(1153, "FirstMiscellaneous"),
         "First Miscellaneous - Chaos Crystal": LocationData(1154, "FirstMiscellaneous"),
@@ -1112,6 +1126,28 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Activate the Hounds Ultimate for the first time": LocationData(1225, "FirstMiscellaneous"),
         "Activate Vulcans Ultimate for the first time": LocationData(1226, "FirstMiscellaneous"),
         "Activate Hellcrows Ultimate for the first time": LocationData(1227, "FirstMiscellaneous"),
+        "Hells First Kill - Marionette": LocationData(1230, "FirstKill"),
+        "Hells First Kill - Cambion": LocationData(1231, "FirstKill"),
+        "Hells First Kill - Behemoth": LocationData(1232, "FirstKill"),
+        "Hells First Kill - Stalker": LocationData(1233, "FirstKill"),
+        "Hells First Kill - Eyeless": LocationData(1234, "FirstKill"),
+        "Hells First Kill - Hierophant": LocationData(1235, "FirstKill"),
+        "Hells First Kill - Lesser Seraph": LocationData(1236, "FirstKill"),
+        "Hells First Kill - Shield Cambion": LocationData(1237, "FirstKill"),
+        "Hells First Kill - Siege Behemoth": LocationData(1238, "FirstKill"),
+        "Hells First Kill - Void Stalker": LocationData(1239, "FirstKill"),
+        "Hells First Kill - Annihilator Seraph": LocationData(1240, "FirstKill"),
+        "Hells First Slaughter - Marionette": LocationData(1250, "FirstSlaughter"),
+        "Hells First Slaughter - Cambion": LocationData(1251, "FirstSlaughter"),
+        "Hells First Slaughter - Behemoth": LocationData(1252, "FirstSlaughter"),
+        "Hells First Slaughter - Stalker": LocationData(1253, "FirstSlaughter"),
+        "Hells First Slaughter - Eyeless": LocationData(1254, "FirstSlaughter"),
+        "Hells First Slaughter - Hierophant": LocationData(1255, "FirstSlaughter"),
+        "Hells First Slaughter - Lesser Seraph": LocationData(1256, "FirstSlaughter"),
+        "Hells First Slaughter - Shield Cambion": LocationData(1257, "FirstSlaughter"),
+        "Hells First Slaughter - Siege Behemoth": LocationData(1258, "FirstSlaughter"),
+        "Hells First Slaughter - Void Stalker": LocationData(1259, "FirstSlaughter"),
+        "Hells First Slaughter - Annihilator Seraph": LocationData(1260, "FirstSlaughter"),
     },
     "KillingWithRhythm Torment1": {
         "Killing with Rhythm: 1 - Achieve Bronze": LocationData(163, "TormentBronze"),
@@ -1449,6 +1485,8 @@ location_name_groups: dict[str, set[str]] = {
     "Codex": set(),
     "Bestiary": set(),
     "FirstMiscellaneous": set(),
+    "FirstKill": set(),
+    "FirstSlaughter": set(),
 }
 
 location_name_to_id: dict[str, int] = { }

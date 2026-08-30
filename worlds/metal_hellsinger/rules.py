@@ -8,13 +8,14 @@ from rule_builder.field_resolvers import FromOption
 from rule_builder.options import OptionFilter
 from rule_builder.rules import CanReachRegion, Has, HasAll, HasAny, HasGroup
 from worlds.metal_hellsinger.options import (
+    ArchdevilEnemiesEnabled,
     DestructibleAsUnlocks,
     HellsUnlocksAsProgressive,
     IncludeAdditionalWeaponVariants,
     IncludeDreamOfTheBeastWeapon,
     IncludePurgatoryWeapon,
+    MinimalDifficulty,
     RandomizedDashEnabled,
-    RandomizedHellsEnabled,
     RandomizedJumpEnabled,
     RandomizedReloadEnabled,
     RandomizedSlaughterEnabled,
@@ -70,24 +71,22 @@ IS_NOT_PROGRESSIVE_HELLS = OptionFilter(HellsUnlocksAsProgressive, False)
 REQUIRE_ASPECT_FOR_BOSS = OptionFilter(RequireAspectForBossArena, True)
 REQUIRE_NO_ASPECT_FOR_BOSS = OptionFilter(RequireAspectForBossArena, False)
 
-IS_NOT_HELLS_RANDOMIZED = OptionFilter(RandomizedHellsEnabled, False)
-
 HAS_TUTORIAL = Has("Hells") & Has("Tutorial")
-HAS_VOKE = Has("Hells") & (Has("Voke", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=1, options=[IS_PROGRESSIVE_HELLS]) | IS_NOT_HELLS_RANDOMIZED)
+HAS_VOKE = Has("Hells") & (Has("Voke", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=1, options=[IS_PROGRESSIVE_HELLS]))
 HAS_VOKE_ASPECT = REQUIRE_NO_ASPECT_FOR_BOSS | (REQUIRE_ASPECT_FOR_BOSS & Has("Aspect of Anger"))
-HAS_STYGIA = Has("Hells") & (Has("Stygia", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=2, options=[IS_PROGRESSIVE_HELLS]) | IS_NOT_HELLS_RANDOMIZED)
+HAS_STYGIA = Has("Hells") & (Has("Stygia", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=2, options=[IS_PROGRESSIVE_HELLS]))
 HAS_STYGIA_ASPECT = REQUIRE_NO_ASPECT_FOR_BOSS | (REQUIRE_ASPECT_FOR_BOSS & Has("Aspect of the Charged"))
-HAS_YHELM = Has("Hells") & (Has("Yhelm", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=3, options=[IS_PROGRESSIVE_HELLS]) | IS_NOT_HELLS_RANDOMIZED)
+HAS_YHELM = Has("Hells") & (Has("Yhelm", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=3, options=[IS_PROGRESSIVE_HELLS]))
 HAS_YHELM_ASPECT = REQUIRE_NO_ASPECT_FOR_BOSS | (REQUIRE_ASPECT_FOR_BOSS & Has("Aspect of the Fortress"))
-HAS_INCAUSTIS = Has("Hells") & (Has("Incaustis", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=4, options=[IS_PROGRESSIVE_HELLS]) | IS_NOT_HELLS_RANDOMIZED)
+HAS_INCAUSTIS = Has("Hells") & (Has("Incaustis", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=4, options=[IS_PROGRESSIVE_HELLS]))
 HAS_INCAUSTIS_ASPECT = REQUIRE_NO_ASPECT_FOR_BOSS | (REQUIRE_ASPECT_FOR_BOSS & Has("Aspect of Infernal Fury"))
-HAS_GEHENNA = Has("Hells") & (Has("Gehenna", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=5, options=[IS_PROGRESSIVE_HELLS]) | IS_NOT_HELLS_RANDOMIZED)
+HAS_GEHENNA = Has("Hells") & (Has("Gehenna", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=5, options=[IS_PROGRESSIVE_HELLS]))
 HAS_GEHENNA_ASPECT = REQUIRE_NO_ASPECT_FOR_BOSS | (REQUIRE_ASPECT_FOR_BOSS & Has("Aspect of the Hellstorm"))
-HAS_NIHIL = Has("Hells") & (Has("Nihil", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=6, options=[IS_PROGRESSIVE_HELLS]) | IS_NOT_HELLS_RANDOMIZED)
+HAS_NIHIL = Has("Hells") & (Has("Nihil", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=6, options=[IS_PROGRESSIVE_HELLS]))
 HAS_NIHIL_ASPECT = REQUIRE_NO_ASPECT_FOR_BOSS | (REQUIRE_ASPECT_FOR_BOSS & Has("Aspect of the Doppelganger"))
-HAS_ACHERON = Has("Hells") & (Has("Acheron", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=7, options=[IS_PROGRESSIVE_HELLS]) | IS_NOT_HELLS_RANDOMIZED)
+HAS_ACHERON = Has("Hells") & (Has("Acheron", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=7, options=[IS_PROGRESSIVE_HELLS]))
 HAS_ACHERON_ASPECT = REQUIRE_NO_ASPECT_FOR_BOSS | (REQUIRE_ASPECT_FOR_BOSS & Has("Aspect of the Wheel"))
-HAS_SHEOL = Has("Hells") & (Has("Sheol", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=8, options=[IS_PROGRESSIVE_HELLS]) | IS_NOT_HELLS_RANDOMIZED)
+HAS_SHEOL = Has("Hells") & (Has("Sheol", options=[IS_NOT_PROGRESSIVE_HELLS]) | Has("Progressive Hells", count=8, options=[IS_PROGRESSIVE_HELLS]))
 
 
 RANDOMIZED_SONGS = OptionFilter(RandomizedSongsEnabled, True)
@@ -109,7 +108,6 @@ CAN_REACH_ANY_BOSS = CanReachRegion("Voke Boss") | CanReachRegion("Stygia Boss")
 HAS_CLOSE_RANGE_WEAPON = HAS_TERMINUS | HAS_PERSEPHONE | HAS_HELLCROW
 HAS_LONG_RANGE_WEAPON = HAS_THE_HOUNDS | HAS_VULCAN | HAS_THE_RED_RIGHT_HAND | HAS_TELOS
 HAS_NON_PAZ_WEAPON = HAS_CLOSE_RANGE_WEAPON | HAS_LONG_RANGE_WEAPON
-HAS_NON_PAZ_RANGE_WEAPON = HAS_PERSEPHONE | HAS_THE_HOUNDS | HAS_VULCAN | HAS_HELLCROW | HAS_THE_RED_RIGHT_HAND | HAS_TELOS
 HAS_RANGED_WEAPON = HAS_PAZ | HAS_PERSEPHONE | HAS_HELLCROW | HAS_THE_HOUNDS | HAS_VULCAN | HAS_THE_RED_RIGHT_HAND | HAS_TELOS
 
 
@@ -129,9 +127,9 @@ IS_NOT_PROGRESSIVE_RELOAD = OptionFilter(RandomizedReloadEnabled, False)
 HAS_QUICK_RELOAD = IS_NOT_PROGRESSIVE_RELOAD | (IS_PROGRESSIVE_RELOAD & Has("Progressive Reload", count=1))
 HAS_MANUAL_RELOAD = IS_NOT_PROGRESSIVE_RELOAD | (IS_PROGRESSIVE_RELOAD & Has("Progressive Reload", count=2))
 
-IS_PROGRESSIVE_SLAUGHTER = OptionFilter(RandomizedSlaughterEnabled, True)
-IS_NOT_PROGRESSIVE_SLAUGHTER = OptionFilter(RandomizedSlaughterEnabled, False)
-HAS_SLAUGHTER = IS_NOT_PROGRESSIVE_SLAUGHTER | (IS_PROGRESSIVE_SLAUGHTER & Has("Slaughter"))
+IS_RANDOM_SLAUGHTER = OptionFilter(RandomizedSlaughterEnabled, True)
+IS_NOT_RANDOM_SLAUGHTER = OptionFilter(RandomizedSlaughterEnabled, False)
+HAS_SLAUGHTER = IS_NOT_RANDOM_SLAUGHTER | (IS_RANDOM_SLAUGHTER & Has("Slaughter"))
 
 IS_DESTRUCTIBLE_RANDOM = OptionFilter(DestructibleAsUnlocks, True)
 IS_NOT_DESTRUCTIBLE_RANDOM = OptionFilter(DestructibleAsUnlocks, False)
@@ -147,18 +145,21 @@ HAS_ANY_DESTRUCTIBLES = HAS_DESTRUCTIBLE_AMMOSTASHES | HAS_DESTRUCTIBLE_HEALTH_C
 
 HAS_REGRESSIVE_DIFFICULTY = OptionFilter(RegressiveDifficulty, True)
 HAS_NOT_REGRESSIVE_DIFFICULTY = OptionFilter(RegressiveDifficulty, False)
-HAS_ARCHDEVIL = (HAS_NOT_REGRESSIVE_DIFFICULTY & HasAny("Archdevil", "Beast", "Goat", "Lamb")) | (HAS_REGRESSIVE_DIFFICULTY & Has("Regressive Difficulty", count=1))
-HAS_BEAST = (HAS_NOT_REGRESSIVE_DIFFICULTY & HasAny("Beast", "Goat", "Lamb")) | (HAS_REGRESSIVE_DIFFICULTY & Has("Regressive Difficulty", count=2))
-HAS_GOAT = (HAS_NOT_REGRESSIVE_DIFFICULTY & HasAny("Goat", "Lamb")) | (HAS_REGRESSIVE_DIFFICULTY & Has("Regressive Difficulty", count=3))
-HAS_LAMB = (HAS_NOT_REGRESSIVE_DIFFICULTY & Has("Lamb")) | (HAS_REGRESSIVE_DIFFICULTY & Has("Regressive Difficulty", count=4))
+
+HAS_ARCHDEVIL_SPAWNS = OptionFilter(ArchdevilEnemiesEnabled, True)
+HAS_ARCHDEVIL = ((HAS_NOT_REGRESSIVE_DIFFICULTY & Has("Archdevil")) | (HAS_REGRESSIVE_DIFFICULTY & Has("Regressive Difficulty", count=1))) & OptionFilter(MinimalDifficulty, 3, "le")
+HAS_BEAST = ((HAS_NOT_REGRESSIVE_DIFFICULTY & Has("Beast")) | (HAS_REGRESSIVE_DIFFICULTY & Has("Regressive Difficulty", count=2))) & OptionFilter(MinimalDifficulty, 2, "le")
+HAS_GOAT = ((HAS_NOT_REGRESSIVE_DIFFICULTY & Has("Goat")) | (HAS_REGRESSIVE_DIFFICULTY & Has("Regressive Difficulty", count=3))) & OptionFilter(MinimalDifficulty, 1, "le")
+HAS_LAMB = ((HAS_NOT_REGRESSIVE_DIFFICULTY & Has("Lamb")) | (HAS_REGRESSIVE_DIFFICULTY & Has("Regressive Difficulty", count=4))) & OptionFilter(MinimalDifficulty, 0, "le")
+HAS_NON_ARCHDEVIL = HAS_LAMB | HAS_GOAT | HAS_BEAST
 
 HAS_BASE_MOVEMENT = HAS_JUMP | HAS_DASH
 HAS_ADVANCED_MOVEMENT = (HAS_JUMP & HAS_DASH) | HAS_SOAR | HAS_DOUBLE_JUMP
 
-HAS_GENERIC_ARENA_2_ACCESS = (HAS_BASE_MOVEMENT & HAS_NON_PAZ_RANGE_WEAPON & HAS_ANY_HEAL) | OUT_OF_LOGIC
-HAS_GENERIC_ARENA_3_ACCESS = (((HAS_ALL_HEAL & HAS_ARCHDEVIL & HAS_ADVANCED_MOVEMENT) | (HAS_BEAST & HAS_ADVANCED_MOVEMENT) | (HAS_GOAT)) & (HAS_RANGED_WEAPON_WITH_ULTIMATE | HAS_QUICK_RELOAD)) | OUT_OF_LOGIC
-HAS_GENERIC_ARENA_4_ACCESS = (((HAS_ALL_HEAL & HAS_ARCHDEVIL & HAS_ADVANCED_MOVEMENT) | (HAS_BEAST & HAS_ADVANCED_MOVEMENT) | (HAS_GOAT)) & (HAS_RANGED_WEAPON_WITH_ULTIMATE | HAS_QUICK_RELOAD)) | OUT_OF_LOGIC
-HAS_GENERIC_BOSS_ACCESS = (((HAS_ALL_HEAL) | (HAS_GOAT)) & HAS_ADVANCED_MOVEMENT & HAS_RANGED_WEAPON_WITH_ULTIMATE & HAS_QUICK_RELOAD) | OUT_OF_LOGIC
+HAS_GENERIC_ARENA_2_ACCESS = (HAS_BASE_MOVEMENT & HAS_ANY_HEAL) | OUT_OF_LOGIC
+HAS_GENERIC_ARENA_3_ACCESS = (((HAS_ALL_HEAL & HAS_ARCHDEVIL & HAS_ADVANCED_MOVEMENT) | ((HAS_BEAST | HAS_ARCHDEVIL_SPAWNS) & HAS_ADVANCED_MOVEMENT) | (HAS_GOAT | HAS_LAMB)) & (HAS_RANGED_WEAPON_WITH_ULTIMATE | HAS_QUICK_RELOAD)) | OUT_OF_LOGIC
+HAS_GENERIC_ARENA_4_ACCESS = (((HAS_ALL_HEAL & HAS_ARCHDEVIL & HAS_ADVANCED_MOVEMENT) | ((HAS_BEAST | HAS_ARCHDEVIL_SPAWNS) & HAS_ADVANCED_MOVEMENT) | (HAS_GOAT | HAS_LAMB)) & (HAS_RANGED_WEAPON_WITH_ULTIMATE | HAS_QUICK_RELOAD)) | OUT_OF_LOGIC
+HAS_GENERIC_BOSS_ACCESS = (HAS_ALL_HEAL & HAS_ADVANCED_MOVEMENT & HAS_RANGED_WEAPON_WITH_ULTIMATE & HAS_QUICK_RELOAD) | OUT_OF_LOGIC
 
 IS_PROGRESSIVE_TORMENT = OptionFilter(TormentUnlocksAsProgressive, True)
 IS_NOT_PROGRESSIVE_TORMENT = OptionFilter(TormentUnlocksAsProgressive, False)
@@ -241,6 +242,239 @@ HAS_SM_3 = Has("Hells") & HAS_SM_3_HELLS & HAS_SM_3_WEAPONS & HAS_SLAUGHTER & ((
 
 HAS_CHAOS_ACCESS = CanReachRegion("Voke Arena2") | CanReachRegion("Stygia Arena2") | CanReachRegion("Yhelm Arena2") | CanReachRegion("Incaustis Arena1") | CanReachRegion("Gehenna Arena1") | CanReachRegion("Nihil Arena1") | CanReachRegion("Acheron Arena1") | CanReachRegion("Sheol Arena1")
 
+
+CAN_REACH_MARIONETTE = (
+    CanReachRegion("Tutorial")
+    | CanReachRegion("Voke Arena1")
+    | CanReachRegion("Stygia Arena1")
+    | CanReachRegion("Yhelm Arena1")
+    | CanReachRegion("Incaustis Arena1")
+    | CanReachRegion("Gehenna Arena1")
+    | CanReachRegion("Nihil Arena1")
+    | CanReachRegion("Acheron Arena1")
+    | CanReachRegion("Sheol Arena1")
+)
+
+CAN_REACH_CAMBION = (
+    CanReachRegion("Voke Arena1")
+    | CanReachRegion("Stygia Arena1")
+    | CanReachRegion("Yhelm Arena1")
+    | CanReachRegion("Incaustis Arena1")
+    | CanReachRegion("Gehenna Arena1")
+    | CanReachRegion("Nihil Arena1")
+    | CanReachRegion("Acheron Arena1")
+    | CanReachRegion("Sheol Arena1")
+)
+
+CAN_REACH_BEHEMOTH = (
+    HAS_NON_ARCHDEVIL
+    & (
+        CanReachRegion("Voke Arena3")
+        | CanReachRegion("Stygia Arena2")
+        | CanReachRegion("Yhelm Arena3")
+        | CanReachRegion("Incaustis Arena1")
+        | CanReachRegion("Gehenna Arena1")
+        | CanReachRegion("Nihil Arena3")
+        | CanReachRegion("Acheron Arena2")
+        | CanReachRegion("Sheol Arena2")
+    )
+) | (
+    (HAS_ARCHDEVIL | HAS_ARCHDEVIL_SPAWNS)
+    & (
+        CanReachRegion("Voke Arena3")
+        | CanReachRegion("Stygia Arena2")
+        | CanReachRegion("Yhelm Arena1")
+        | CanReachRegion("Incaustis Arena2")
+        | CanReachRegion("Gehenna Arena2")
+        | CanReachRegion("Nihil Arena2")
+        | CanReachRegion("Acheron Arena2")
+        | CanReachRegion("Sheol Arena2")
+    )
+)
+
+CAN_REACH_STALKER = (HAS_BASE_MOVEMENT | OUT_OF_LOGIC) & (
+    (
+        HAS_NON_ARCHDEVIL
+        & (
+            CanReachRegion("Stygia Arena3")
+            | CanReachRegion("Yhelm Arena2")
+            | CanReachRegion("Incaustis Arena1")
+            | CanReachRegion("Gehenna Arena2")
+            | CanReachRegion("Nihil Arena2")
+            | CanReachRegion("Acheron Arena2")
+            | CanReachRegion("Sheol Arena2")
+        )
+    )
+    | (
+        (HAS_ARCHDEVIL | HAS_ARCHDEVIL_SPAWNS)
+        & (
+            CanReachRegion("Stygia Arena1")
+            | CanReachRegion("Yhelm Arena2")
+            | CanReachRegion("Incaustis Arena2")
+            | CanReachRegion("Gehenna Arena2")
+            | CanReachRegion("Nihil Arena2")
+            | CanReachRegion("Acheron Arena2")
+            | CanReachRegion("Sheol Arena2")
+        )
+    )
+)
+
+CAN_REACH_EYELESS = (
+    HAS_NON_ARCHDEVIL
+    & (
+        CanReachRegion("Yhelm Arena2")
+        | CanReachRegion("Incaustis Arena1")
+        | CanReachRegion("Gehenna Arena1")
+        | CanReachRegion("Nihil Arena2")
+        | CanReachRegion("Acheron Arena1")
+        | CanReachRegion("Sheol Arena1")
+    )
+) | (
+    (HAS_ARCHDEVIL | HAS_ARCHDEVIL_SPAWNS)
+    & (
+        CanReachRegion("Voke Arena2")
+        | CanReachRegion("Stygia Arena3")
+        | CanReachRegion("Yhelm Arena1")
+        | CanReachRegion("Incaustis Arena1")
+        | CanReachRegion("Gehenna Arena1")
+        | CanReachRegion("Nihil Arena2")
+        | CanReachRegion("Acheron Arena2")
+        | CanReachRegion("Sheol Arena1")
+    )
+)
+
+CAN_REACH_HIEROPHANT = (
+    HAS_NON_ARCHDEVIL
+    & (
+        CanReachRegion("Incaustis Arena2")
+        | CanReachRegion("Gehenna Arena1")
+        | CanReachRegion("Nihil Arena2")
+        | CanReachRegion("Acheron Arena1")
+        | CanReachRegion("Sheol Arena1")
+    )
+) | (
+    (HAS_ARCHDEVIL | HAS_ARCHDEVIL_SPAWNS)
+    & (
+        CanReachRegion("Voke Arena3")
+        | CanReachRegion("Yhelm Arena2")
+        | CanReachRegion("Incaustis Arena2")
+        | CanReachRegion("Gehenna Arena1")
+        | CanReachRegion("Nihil Arena2")
+        | CanReachRegion("Acheron Arena2")
+        | CanReachRegion("Sheol Arena1")
+    )
+)
+
+CAN_REACH_LESSER_SERAPH = (HAS_LONG_RANGE_WEAPON | OUT_OF_LOGIC) & (
+    (
+        HAS_NON_ARCHDEVIL
+        & (
+            CanReachRegion("Gehenna Arena2")
+            | CanReachRegion("Nihil Arena2")
+            | CanReachRegion("Acheron Arena1")
+            | CanReachRegion("Sheol Arena2")
+        )
+    )
+    | (
+        (HAS_ARCHDEVIL | HAS_ARCHDEVIL_SPAWNS)
+        & (
+            CanReachRegion("Voke Arena1")
+            | CanReachRegion("Yhelm Arena1")
+            | CanReachRegion("Incaustis Arena1")
+            | CanReachRegion("Gehenna Arena2")
+            | CanReachRegion("Nihil Arena1")
+            | CanReachRegion("Acheron Arena2")
+            | CanReachRegion("Sheol Arena2")
+        )
+    )
+)
+
+CAN_REACH_SHIELD_CAMBION = (HAS_BASE_MOVEMENT | OUT_OF_LOGIC) & (
+    (
+        HAS_NON_ARCHDEVIL
+        & (
+            CanReachRegion("Yhelm Arena1")
+            | CanReachRegion("Incaustis Arena2")
+            | CanReachRegion("Gehenna Arena2")
+            | CanReachRegion("Nihil Arena2")
+            | CanReachRegion("Acheron Arena2")
+            | CanReachRegion("Sheol Arena1")
+        )
+    )
+    | (
+        (HAS_ARCHDEVIL | HAS_ARCHDEVIL_SPAWNS)
+        & (
+            CanReachRegion("Stygia Arena1")
+            | CanReachRegion("Yhelm Arena1")
+            | CanReachRegion("Incaustis Arena2")
+            | CanReachRegion("Gehenna Arena2")
+            | CanReachRegion("Nihil Arena2")
+            | CanReachRegion("Acheron Arena2")
+            | CanReachRegion("Sheol Arena1")
+        )
+    )
+)
+
+
+CAN_REACH_SIEGE_BEHEMOTH = ((HAS_BASE_MOVEMENT & HAS_ANY_HEAL) | OUT_OF_LOGIC) & (
+    (
+        HAS_NON_ARCHDEVIL
+        & (
+            CanReachRegion("Incaustis Arena4")
+            | CanReachRegion("Gehenna Arena1")
+            | CanReachRegion("Nihil Arena2")
+            | CanReachRegion("Acheron Arena3")
+            | CanReachRegion("Sheol Arena1")
+        )
+    )
+    | (
+        (HAS_ARCHDEVIL | HAS_ARCHDEVIL_SPAWNS)
+        & (
+            CanReachRegion("Voke Arena3")
+            | CanReachRegion("Yhelm Arena3")
+            | CanReachRegion("Incaustis Arena2")
+            | CanReachRegion("Gehenna Arena1")
+            | CanReachRegion("Nihil Arena1")
+            | CanReachRegion("Acheron Arena2")
+            | CanReachRegion("Sheol Arena1")
+        )
+    )
+)
+
+CAN_REACH_VOID_STALKER = ((HAS_BASE_MOVEMENT & HAS_ANY_HEAL) | OUT_OF_LOGIC) & (
+    (
+        HAS_NON_ARCHDEVIL
+        & (CanReachRegion("Nihil Arena3") | CanReachRegion("Acheron Arena2") | CanReachRegion("Sheol Arena2"))
+    )
+    | (
+        (HAS_ARCHDEVIL | HAS_ARCHDEVIL_SPAWNS)
+        & (
+            CanReachRegion("Stygia Arena3")
+            | CanReachRegion("Yhelm Arena2")
+            | CanReachRegion("Gehenna Arena2")
+            | CanReachRegion("Nihil Arena3")
+            | CanReachRegion("Acheron Arena1")
+            | CanReachRegion("Sheol Arena2")
+        )
+    )
+)
+
+
+CAN_REACH_ANNIHILATOR_SERAPH = (
+    ((HAS_BASE_MOVEMENT & HAS_ANY_HEAL & HAS_LONG_RANGE_WEAPON) | OUT_OF_LOGIC)
+    & (HAS_ARCHDEVIL | HAS_ARCHDEVIL_SPAWNS)
+    & (
+        CanReachRegion("Voke Arena4")
+        | CanReachRegion("Stygia Arena2")
+        | CanReachRegion("Incaustis Arena2")
+        | CanReachRegion("Gehenna Arena3")
+        | CanReachRegion("Nihil Arena2")
+        | CanReachRegion("Acheron Arena1")
+        | CanReachRegion("Sheol Arena2")
+    )
+)
+
+
 JUMP_OUT_OF_LOGIC = HAS_BASE_MOVEMENT & (Has("Vulcan") | Has("The Lost Hounds")) & OUT_OF_LOGIC
 
 def set_all_rules(world: MetalHellsingerWorld) -> None:
@@ -256,11 +490,11 @@ def set_all_entrance_rules(world: MetalHellsingerWorld) -> None:
     global_to_voke_arena1 = world.get_entrance("Global to Voke Arena1")
     world.set_rule(global_to_voke_arena1, HAS_VOKE)
     voke_arena1_to_voke_arena2 = world.get_entrance("Voke Arena1 to Voke Arena2")
-    world.set_rule(voke_arena1_to_voke_arena2, HAS_GENERIC_ARENA_2_ACCESS & (HAS_DOUBLE_JUMP | HAS_DASH | (OUT_OF_LOGIC & HAS_JUMP) | JUMP_OUT_OF_LOGIC))
+    world.set_rule(voke_arena1_to_voke_arena2, HAS_GENERIC_ARENA_2_ACCESS & (HAS_DOUBLE_JUMP | HAS_DASH | JUMP_OUT_OF_LOGIC))
     voke_arena2_to_voke_arena3 = world.get_entrance("Voke Arena2 to Voke Arena3")
-    world.set_rule(voke_arena2_to_voke_arena3, HAS_GENERIC_ARENA_3_ACCESS & (HAS_DOUBLE_JUMP | HAS_DASH | (OUT_OF_LOGIC & HAS_JUMP) | JUMP_OUT_OF_LOGIC))
+    world.set_rule(voke_arena2_to_voke_arena3, HAS_GENERIC_ARENA_3_ACCESS & (HAS_DOUBLE_JUMP | HAS_DASH | JUMP_OUT_OF_LOGIC))
     voke_arena3_to_voke_arena4 = world.get_entrance("Voke Arena3 to Voke Arena4")
-    world.set_rule(voke_arena3_to_voke_arena4, HAS_GENERIC_ARENA_4_ACCESS & (HAS_DOUBLE_JUMP | HAS_DASH | (OUT_OF_LOGIC & HAS_JUMP) | JUMP_OUT_OF_LOGIC))
+    world.set_rule(voke_arena3_to_voke_arena4, HAS_GENERIC_ARENA_4_ACCESS & (HAS_DOUBLE_JUMP | HAS_DASH | JUMP_OUT_OF_LOGIC))
     voke_arena4_to_voke_boss = world.get_entrance("Voke Arena4 to Voke Boss")
     world.set_rule(voke_arena4_to_voke_boss, HAS_GENERIC_BOSS_ACCESS & HAS_VOKE_ASPECT)
 
@@ -472,17 +706,29 @@ def set_all_location_rules(world: MetalHellsingerWorld) -> None:
             world.set_rule(location, (HAS_QUICK_RELOAD & HAS_ADVANCED_MOVEMENT & HAS_ANY_HEAL) | OUT_OF_LOGIC)
 
 
-    world.set_rule(world.get_location("Bestiary Entry - Marionette discovered"), HAS_TUTORIAL & HAS_BASE_MOVEMENT)
-    world.set_rule(world.get_location("Bestiary Entry - Cambion discovered"), HAS_VOKE | HAS_STYGIA)
-    world.set_rule(world.get_location("Bestiary Entry - Behemoth discovered"), CanReachRegion("Voke Arena4") | CanReachRegion("Stygia Arena2"))
-    world.set_rule(world.get_location("Bestiary Entry - Stalker discovered"), CanReachRegion("Stygia Arena3"))
-    world.set_rule(world.get_location("Bestiary Entry - Eyeless discovered"), CanReachRegion("Yhelm Arena2"))
-    world.set_rule(world.get_location("Bestiary Entry - Hierophant discovered"), CanReachRegion("Incaustis Arena2"))
-    world.set_rule(world.get_location("Bestiary Entry - Lesser Seraph discovered"), CanReachRegion("Gehenna Arena2"))
-    world.set_rule(world.get_location("Bestiary Entry - Shield Cambion discovered"), HAS_YHELM)
-    world.set_rule(world.get_location("Bestiary Entry - Siege Behemoth discovered"), CanReachRegion("Incaustis Arena4"))
-    world.set_rule(world.get_location("Bestiary Entry - Void Stalker discovered"), CanReachRegion("Nihil Arena3"))
-    world.set_rule(world.get_location("Bestiary Entry - Annihilator Seraph discovered"), CanReachRegion("Voke Arena4") & (Has("Archdevil") | Has("Regressive Difficulty")))
+    world.set_rule(world.get_location("Hells First Kill - Marionette"), CAN_REACH_MARIONETTE)
+    world.set_rule(world.get_location("Hells First Kill - Cambion"), CAN_REACH_CAMBION)
+    world.set_rule(world.get_location("Hells First Kill - Behemoth"), CAN_REACH_BEHEMOTH)
+    world.set_rule(world.get_location("Hells First Kill - Stalker"), CAN_REACH_STALKER)
+    world.set_rule(world.get_location("Hells First Kill - Eyeless"), CAN_REACH_EYELESS)
+    world.set_rule(world.get_location("Hells First Kill - Hierophant"), CAN_REACH_HIEROPHANT)
+    world.set_rule(world.get_location("Hells First Kill - Lesser Seraph"), CAN_REACH_LESSER_SERAPH)
+    world.set_rule(world.get_location("Hells First Kill - Shield Cambion"), CAN_REACH_SHIELD_CAMBION)
+    world.set_rule(world.get_location("Hells First Kill - Siege Behemoth"), CAN_REACH_SIEGE_BEHEMOTH)
+    world.set_rule(world.get_location("Hells First Kill - Void Stalker"), CAN_REACH_VOID_STALKER)
+    world.set_rule(world.get_location("Hells First Kill - Annihilator Seraph"), CAN_REACH_ANNIHILATOR_SERAPH)
+
+    world.set_rule(world.get_location("Bestiary Entry - Marionette"), HAS_TUTORIAL & HAS_BASE_MOVEMENT)
+    world.set_rule(world.get_location("Bestiary Entry - Cambion"), HAS_VOKE | HAS_STYGIA)
+    world.set_rule(world.get_location("Bestiary Entry - Behemoth"), CanReachRegion("Voke Arena4") | CanReachRegion("Stygia Arena2"))
+    world.set_rule(world.get_location("Bestiary Entry - Stalker"), CanReachRegion("Stygia Arena3"))
+    world.set_rule(world.get_location("Bestiary Entry - Eyeless"), CanReachRegion("Yhelm Arena2"))
+    world.set_rule(world.get_location("Bestiary Entry - Hierophant"), CanReachRegion("Incaustis Arena2"))
+    world.set_rule(world.get_location("Bestiary Entry - Lesser Seraph"), CanReachRegion("Gehenna Arena2"))
+    world.set_rule(world.get_location("Bestiary Entry - Shield Cambion"), HAS_YHELM)
+    world.set_rule(world.get_location("Bestiary Entry - Siege Behemoth"), CanReachRegion("Incaustis Arena4"))
+    world.set_rule(world.get_location("Bestiary Entry - Void Stalker"), CanReachRegion("Nihil Arena3"))
+    world.set_rule(world.get_location("Bestiary Entry - Annihilator Seraph"), CanReachRegion("Voke Arena4") & (Has("Archdevil") | Has("Regressive Difficulty")))
 
     world.set_rule(world.get_location("Stygia - Next Multiplier in Arena 1 on pillar"), HAS_BASE_MOVEMENT)
     world.set_rule(world.get_location("Nihil - Max Multiplier in Arena 1"), HAS_BASE_MOVEMENT)
@@ -504,8 +750,21 @@ def set_all_location_rules(world: MetalHellsingerWorld) -> None:
         world.set_rule(world.get_location("Fury Combo - Chaos Flight discovered"), (HAS_CHAOS_ACCESS & HAS_SOAR & HAS_JUMP & HAS_DESTRUCTIBLE_CHAOS_CRYSTALS))
         world.set_rule(world.get_location("Fury Combo - Death from Above discovered"), (HAS_ANY_HELL & HAS_SOAR & HAS_SLAUGHTER))
         world.set_rule(world.get_location("Fury Combo - Lethal Cycle discovered"), (HAS_ANY_HELL & HasGroup("Weapon", count=3)))
-        world.set_rule(world.get_location("Fury Combo - Kill Trio discovered"), HAS_ANY_HELL)
+        world.set_rule(world.get_location("Fury Combo - Kill Trio discovered"), HAS_ANY_HELL & (HasGroup("Weapon", count=2)| OUT_OF_LOGIC))
         world.set_rule(world.get_location("Fury Combo - Triple Dash discovered"), (HAS_ANY_HELL & HAS_DASH))
+
+    if(world.options.include_first_slaughter_checks):
+        world.set_rule(world.get_location("Hells First Slaughter - Marionette"), HAS_SLAUGHTER & CAN_REACH_MARIONETTE)
+        world.set_rule(world.get_location("Hells First Slaughter - Cambion"), HAS_SLAUGHTER & CAN_REACH_CAMBION)
+        world.set_rule(world.get_location("Hells First Slaughter - Behemoth"), HAS_SLAUGHTER & CAN_REACH_BEHEMOTH)
+        world.set_rule(world.get_location("Hells First Slaughter - Stalker"), HAS_SLAUGHTER & CAN_REACH_STALKER)
+        world.set_rule(world.get_location("Hells First Slaughter - Eyeless"), HAS_SLAUGHTER & CAN_REACH_EYELESS)
+        world.set_rule(world.get_location("Hells First Slaughter - Hierophant"), HAS_SLAUGHTER & CAN_REACH_HIEROPHANT)
+        world.set_rule(world.get_location("Hells First Slaughter - Lesser Seraph"), HAS_SLAUGHTER & CAN_REACH_LESSER_SERAPH)
+        world.set_rule(world.get_location("Hells First Slaughter - Shield Cambion"), HAS_SLAUGHTER & CAN_REACH_SHIELD_CAMBION)
+        world.set_rule(world.get_location("Hells First Slaughter - Siege Behemoth"), HAS_SLAUGHTER & CAN_REACH_SIEGE_BEHEMOTH)
+        world.set_rule(world.get_location("Hells First Slaughter - Void Stalker"), HAS_SLAUGHTER & CAN_REACH_VOID_STALKER)
+        world.set_rule(world.get_location("Hells First Slaughter - Annihilator Seraph"), HAS_SLAUGHTER & CAN_REACH_ANNIHILATOR_SERAPH)
 
     if(world.options.randomized_boons_enabled):
         world.set_rule(world.get_location("Voke - Boon Completion"), CanReachRegion("Voke Boss"))
@@ -650,16 +909,6 @@ def set_all_location_rules(world: MetalHellsingerWorld) -> None:
         world.set_rule(world.get_location("Gehenna - Secret Max Multiplier"), HAS_DASH | HAS_DOUBLE_JUMP | JUMP_OUT_OF_LOGIC)
         world.set_rule(world.get_location("Acheron - Secret Max Multiplier"), HAS_BASE_MOVEMENT)
         world.set_rule(world.get_location("Sheol - Secret Max Multiplier"), HAS_DASH | JUMP_OUT_OF_LOGIC)
-
-    if world.options.singular_destructible_locations_enabled and world.options.destructible_locations_enabled:
-        world.set_rule(world.get_location("Stygia - Arena 2 Ammostash Destruction"), HAS_DESTRUCTIBLE_AMMOSTASHES & (HAS_BASE_MOVEMENT | HAS_RANGED_WEAPON))
-        world.set_rule(world.get_location("Incaustis - Arena 1 Health Crystal Destruction"), HAS_DESTRUCTIBLE_HEALTH_CRYSTALS & (HAS_BASE_MOVEMENT | HAS_RANGED_WEAPON))
-        world.set_rule(world.get_location("Gehenna - Arena 2 Ammostash Destruction"), HAS_DESTRUCTIBLE_AMMOSTASHES & (HAS_BASE_MOVEMENT | HAS_RANGED_WEAPON))
-
-    if not world.options.singular_destructible_locations_enabled and world.options.destructible_locations_enabled:
-        world.set_rule(world.get_location("Stygia - Arena 2 Destructible Completion"), HAS_DESTRUCTIBLE_AMMOSTASHES & (HAS_BASE_MOVEMENT | HAS_RANGED_WEAPON))
-        world.set_rule(world.get_location("Incaustis - Arena 1 Destructible Completion"), HAS_DESTRUCTIBLE_HEALTH_CRYSTALS & (HAS_BASE_MOVEMENT | HAS_RANGED_WEAPON))
-        world.set_rule(world.get_location("Gehenna - Arena 2 Destructible Completion"), HAS_DESTRUCTIBLE_AMMOSTASHES & (HAS_BASE_MOVEMENT | HAS_RANGED_WEAPON))
 
 
 def set_completion_condition(world: MetalHellsingerWorld) -> None:
