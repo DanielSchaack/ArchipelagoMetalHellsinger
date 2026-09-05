@@ -105,10 +105,9 @@ HAS_SHEOL_EXTRA_CONDITIONS = Has("Hells") & HAS_COAT_OF_ARMS_FOR_SHEOL & HAS_NO_
 HAS_ANY_HELL = HAS_VOKE | HAS_STYGIA | HAS_YHELM | HAS_INCAUSTIS | HAS_GEHENNA | HAS_NIHIL | HAS_ACHERON | (HAS_SHEOL & HAS_SHEOL_EXTRA_CONDITIONS)
 CAN_REACH_ANY_BOSS = CanReachRegion("Voke Boss") | CanReachRegion("Stygia Boss") | CanReachRegion("Yhelm Boss") | CanReachRegion("Incaustis Boss") | CanReachRegion("Gehenna Boss") | CanReachRegion("Nihil Boss") | CanReachRegion("Acheron Boss") | CanReachRegion("Sheol Boss")
 
-HAS_CLOSE_RANGE_WEAPON = HAS_TERMINUS | HAS_PERSEPHONE | HAS_HELLCROW
-HAS_LONG_RANGE_WEAPON = HAS_THE_HOUNDS | HAS_VULCAN | HAS_THE_RED_RIGHT_HAND | HAS_TELOS
-HAS_NON_PAZ_WEAPON = HAS_CLOSE_RANGE_WEAPON | HAS_LONG_RANGE_WEAPON
-HAS_RANGED_WEAPON = HAS_PAZ | HAS_PERSEPHONE | HAS_HELLCROW | HAS_THE_HOUNDS | HAS_VULCAN | HAS_THE_RED_RIGHT_HAND | HAS_TELOS
+HAS_CLOSE_RANGE_WEAPON = HAS_PERSEPHONE | HAS_THE_RED_RIGHT_HAND | HAS_HELLCROW
+HAS_LONG_RANGE_WEAPON = HAS_THE_HOUNDS | HAS_VULCAN | HAS_TELOS
+HAS_RELOADABLE_WEAPON = HAS_PERSEPHONE | HAS_THE_HOUNDS | HAS_VULCAN | HAS_THE_RED_RIGHT_HAND | HAS_TELOS
 
 
 IS_PROGRESSIVE_JUMP = OptionFilter(RandomizedJumpEnabled, True)
@@ -157,8 +156,8 @@ HAS_BASE_MOVEMENT = HAS_JUMP | HAS_DASH
 HAS_ADVANCED_MOVEMENT = (HAS_JUMP & HAS_DASH) | HAS_SOAR | HAS_DOUBLE_JUMP
 
 HAS_GENERIC_ARENA_2_ACCESS = (HAS_BASE_MOVEMENT & HAS_ANY_HEAL) | OUT_OF_LOGIC
-HAS_GENERIC_ARENA_3_ACCESS = (((HAS_ALL_HEAL & HAS_ARCHDEVIL & HAS_ADVANCED_MOVEMENT) | ((HAS_BEAST | HAS_ARCHDEVIL_SPAWNS) & HAS_ADVANCED_MOVEMENT) | (HAS_GOAT | HAS_LAMB)) & (HAS_RANGED_WEAPON_WITH_ULTIMATE | HAS_QUICK_RELOAD)) | OUT_OF_LOGIC
-HAS_GENERIC_ARENA_4_ACCESS = (((HAS_ALL_HEAL & HAS_ARCHDEVIL & HAS_ADVANCED_MOVEMENT) | ((HAS_BEAST | HAS_ARCHDEVIL_SPAWNS) & HAS_ADVANCED_MOVEMENT) | (HAS_GOAT | HAS_LAMB)) & (HAS_RANGED_WEAPON_WITH_ULTIMATE | HAS_QUICK_RELOAD)) | OUT_OF_LOGIC
+HAS_GENERIC_ARENA_3_ACCESS = (((HAS_ALL_HEAL & (HAS_ARCHDEVIL | HAS_ARCHDEVIL_SPAWNS) & HAS_ADVANCED_MOVEMENT) | (HAS_BEAST & HAS_ADVANCED_MOVEMENT) | (HAS_GOAT | HAS_LAMB)) & (HAS_RANGED_WEAPON_WITH_ULTIMATE | HAS_QUICK_RELOAD)) | OUT_OF_LOGIC
+HAS_GENERIC_ARENA_4_ACCESS = (((HAS_ALL_HEAL & (HAS_ARCHDEVIL | HAS_ARCHDEVIL_SPAWNS) & HAS_ADVANCED_MOVEMENT) | (HAS_BEAST & HAS_ADVANCED_MOVEMENT) | (HAS_GOAT | HAS_LAMB)) & (HAS_RANGED_WEAPON_WITH_ULTIMATE | HAS_QUICK_RELOAD)) | OUT_OF_LOGIC
 HAS_GENERIC_BOSS_ACCESS = (HAS_ALL_HEAL & HAS_ADVANCED_MOVEMENT & HAS_RANGED_WEAPON_WITH_ULTIMATE & HAS_QUICK_RELOAD) | OUT_OF_LOGIC
 
 IS_PROGRESSIVE_TORMENT = OptionFilter(TormentUnlocksAsProgressive, True)
@@ -240,7 +239,16 @@ HAS_SM_1 = Has("Hells") & HAS_SM_1_HELLS & HAS_SM_1_WEAPONS & HAS_SLAUGHTER & ((
 HAS_SM_2 = Has("Hells") & HAS_SM_2_HELLS & HAS_SM_2_WEAPONS & HAS_SLAUGHTER & ((IS_PROGRESSIVE_TORMENT & Has("Progressive Slaughter Mastery", count=2)) | (IS_NOT_PROGRESSIVE_TORMENT & Has("Slaughter Mastery: 2")))
 HAS_SM_3 = Has("Hells") & HAS_SM_3_HELLS & HAS_SM_3_WEAPONS & HAS_SLAUGHTER & ((IS_PROGRESSIVE_TORMENT & Has("Progressive Slaughter Mastery", count=3)) | (IS_NOT_PROGRESSIVE_TORMENT & Has("Slaughter Mastery: 3")))
 
-HAS_CHAOS_ACCESS = CanReachRegion("Voke Arena2") | CanReachRegion("Stygia Arena2") | CanReachRegion("Yhelm Arena2") | CanReachRegion("Incaustis Arena1") | CanReachRegion("Gehenna Arena1") | CanReachRegion("Nihil Arena1") | CanReachRegion("Acheron Arena1") | CanReachRegion("Sheol Arena1")
+HAS_CHAOS_ACCESS = (
+    CanReachRegion("Voke Arena2")
+    | CanReachRegion("Stygia Arena2")
+    | CanReachRegion("Yhelm Arena2")
+    | CanReachRegion("Incaustis Arena1")
+    | CanReachRegion("Gehenna Arena1")
+    | CanReachRegion("Nihil Arena1")
+    | CanReachRegion("Acheron Arena1")
+    | CanReachRegion("Sheol Arena1")
+)
 
 
 CAN_REACH_MARIONETTE = (
@@ -736,8 +744,8 @@ def set_all_location_rules(world: MetalHellsingerWorld) -> None:
     world.set_rule(world.get_location("Sheol - Next Multiplier in Arena 3"), (HAS_DASH | HAS_DOUBLE_JUMP) | JUMP_OUT_OF_LOGIC)
 
     if(world.options.include_fury_combo_checks):
-        world.set_rule(world.get_location("Fury Combo - Styx Reload discovered"), (HAS_ANY_HELL & HAS_QUICK_RELOAD & HAS_DESTRUCTIBLE_HEALTH_CRYSTALS))
-        world.set_rule(world.get_location("Fury Combo - Hells's Heartbeat discovered"), (HAS_ANY_HELL & HAS_QUICK_RELOAD))
+        world.set_rule(world.get_location("Fury Combo - Styx Reload discovered"), (HAS_ANY_HELL & HAS_QUICK_RELOAD & HAS_DESTRUCTIBLE_HEALTH_CRYSTALS & HAS_RELOADABLE_WEAPON))
+        world.set_rule(world.get_location("Fury Combo - Hells's Heartbeat discovered"), (HAS_ANY_HELL & HAS_QUICK_RELOAD & HAS_RELOADABLE_WEAPON))
         world.set_rule(world.get_location("Fury Combo - Basilisk Mode discovered"), (HAS_SOAR & HAS_ANY_HELL))
         world.set_rule(world.get_location("Fury Combo - Double Hit and Run discovered"), (HAS_ANY_HELL & (HAS_DESTRUCTIBLE_AMMOSTASHES | HAS_DESTRUCTIBLE_HEALTH_CRYSTALS | (HAS_DESTRUCTIBLE_CHAOS_CRYSTALS & OUT_OF_LOGIC)) & HAS_DASH))
         world.set_rule(world.get_location("Fury Combo - Shatter Two discovered"), (HAS_ANY_HELL & (HAS_DESTRUCTIBLE_AMMOSTASHES | HAS_DESTRUCTIBLE_HEALTH_CRYSTALS | (HAS_DESTRUCTIBLE_CHAOS_CRYSTALS & OUT_OF_LOGIC))))
@@ -745,7 +753,7 @@ def set_all_location_rules(world: MetalHellsingerWorld) -> None:
         world.set_rule(world.get_location("Fury Combo - Double Slaughter discovered"), (HAS_ANY_HELL & HAS_SLAUGHTER))
         world.set_rule(world.get_location("Fury Combo - Chaos and Slaughter discovered"), (HAS_CHAOS_ACCESS & HAS_DESTRUCTIBLE_CHAOS_CRYSTALS & HAS_SLAUGHTER))
         world.set_rule(world.get_location("Fury Combo - Unholy Mess discovered"), (HAS_ANY_HELL & HAS_SLAUGHTER))
-        world.set_rule(world.get_location("Fury Combo - Five Endings discovered"), (((HAS_CHAOS_ACCESS & HAS_DESTRUCTIBLE_CHAOS_CRYSTALS) | HAS_PAZ) & (HasGroup("Weapon", count=3) | OUT_OF_LOGIC)) | (HasGroup("Weapon", count=1) & OUT_OF_LOGIC))
+        world.set_rule(world.get_location("Fury Combo - Five Endings discovered"), (((HAS_CHAOS_ACCESS & HAS_DESTRUCTIBLE_CHAOS_CRYSTALS) | HAS_PAZ) & HasGroup("Weapon", count=3)) | (HasGroup("Weapon", count=1) & OUT_OF_LOGIC))
         world.set_rule(world.get_location("Fury Combo - Slaughter and Kill discovered"), (HAS_ANY_HELL & HAS_SLAUGHTER))
         world.set_rule(world.get_location("Fury Combo - Chaos Flight discovered"), (HAS_CHAOS_ACCESS & HAS_SOAR & HAS_JUMP & HAS_DESTRUCTIBLE_CHAOS_CRYSTALS))
         world.set_rule(world.get_location("Fury Combo - Death from Above discovered"), (HAS_ANY_HELL & HAS_SOAR & HAS_SLAUGHTER))
@@ -780,7 +788,7 @@ def set_all_location_rules(world: MetalHellsingerWorld) -> None:
         world.set_rule(world.get_location("First Miscellaneous - Slaughter"), HAS_SLAUGHTER)
         world.set_rule(world.get_location("First Miscellaneous - Jump"), HAS_JUMP)
         world.set_rule(world.get_location("First Miscellaneous - Double Jump"), HAS_DOUBLE_JUMP)
-        world.set_rule(world.get_location("First Miscellaneous - Quick Reload"), HAS_QUICK_RELOAD)
+        world.set_rule(world.get_location("First Miscellaneous - Quick Reload"), HAS_QUICK_RELOAD & HAS_RELOADABLE_WEAPON)
         world.set_rule(world.get_location("First Miscellaneous - Dash"), HAS_DASH)
         world.set_rule(world.get_location("First Miscellaneous - Soar"), HAS_SOAR)
         world.set_rule(world.get_location("First Miscellaneous - Ammostash"), HAS_DESTRUCTIBLE_AMMOSTASHES)
