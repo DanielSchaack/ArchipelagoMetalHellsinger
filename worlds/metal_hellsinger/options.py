@@ -38,7 +38,7 @@ class RequiredHellsCompletion(Range):
 
 class RegressiveDifficulty(Toggle):
     """
-    If enabled, starts the game in the highest difficulty and can be lowered by collecting regressive difficulty items.
+    If enabled, starts the game in the highest difficulty (Archdevil) and can be lowered by collecting regressive difficulty items.
 
     Warning: This IS difficult, especially with some randomized abilities.
     """
@@ -48,8 +48,8 @@ class RegressiveDifficulty(Toggle):
 
 class StartingDifficulty(Choice):
     """
-    The individual difficulties are their own items.
-    Pick your starting difficulty.
+    The individual difficulties are their own items while regressive difficulty is disabled.
+    If Archdevil is chosen while it isn't added using "Include Archdevil Difficulty", Beast is chosen instead.
 
     - Lamb = Easy
     - Goat = Medium
@@ -63,6 +63,17 @@ class StartingDifficulty(Choice):
     option_beast = 2
     option_archdevil = 3
     default = 1
+
+
+class IncludeArchdevilDifficulty(Toggle):
+    """
+    If enabled, includes the Archdevil difficulty as an item.
+
+    Note: Archdevil is not beginner friendly.
+    Note: Archdevil may make certain 'First Kill' and 'First Slaughter' checks available earlier than expected, forcing you to play on said difficulty.
+    """
+
+    display_name = "Include Archdevil Difficulty"
 
 
 class MinimalDifficulty(Choice):
@@ -654,6 +665,7 @@ class MetalHellsingerOptions(PerGameCommonOptions):
     required_hells_completion: RequiredHellsCompletion
     regressive_difficulty: RegressiveDifficulty
     starting_difficulty: StartingDifficulty
+    include_archdevil_difficulty: IncludeArchdevilDifficulty
     minimal_difficulty: MinimalDifficulty
     hells_unlocks_as_progressive: HellsUnlocksAsProgressive
     require_aspect_for_boss_arena: RequireAspectForBossArena
@@ -724,6 +736,7 @@ option_groups = [
             StartingHells,
             RequireAspectForBossArena,
             RegressiveDifficulty,
+            IncludeArchdevilDifficulty,
             StartingDifficulty,
             MinimalDifficulty,
             ArchdevilEnemiesEnabled,

@@ -139,10 +139,15 @@ def create_hells_item_pool(world: MetalHellsingerWorld) -> tuple[list[str], int]
             world.push_precollected(world.create_item("Regressive Difficulty"))
             required_items_dict["Regressive Difficulty"] = 3
         else:
+            opts = dict(option_to_difficulty)
             required_difficulty = world.options.starting_difficulty.value if world.options.starting_difficulty.value >= world.options.minimal_difficulty.value else world.options.minimal_difficulty.value
-            option = option_to_difficulty[required_difficulty]
+            if required_difficulty==3 and not world.options.include_archdevil_difficulty and not world.options.minimal_difficulty.value == 3:
+                required_difficulty = 2
+                opts.pop(3)
+
+            option = opts[required_difficulty]
             world.push_precollected(world.create_item(option))
-            available_diff = list(option_to_difficulty.values())
+            available_diff = list(opts.values())
             available_diff.remove(option)
             required_items.extend(item_table[diff] for diff in available_diff)
 

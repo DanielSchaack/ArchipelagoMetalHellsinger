@@ -153,6 +153,17 @@ def create_all_locations(world: "MetalHellsingerWorld"):
                 location_id = get_location_names_with_ids(["First Miscellaneous - Infinite Jump"])
                 world.get_region("Global").add_locations(location_id, MetalHellsingerLocation)
 
+        if world.options.regressive_difficulty or world.options.include_archdevil_difficulty:
+            location_id = get_location_names_with_ids(["Bestiary Entry - Annihilator Seraph"])
+            world.get_region("Voke Arena4").add_locations(location_id, MetalHellsingerLocation)
+
+        if world.options.regressive_difficulty or world.options.include_archdevil_difficulty or world.options.archdevil_enemies_enabled:
+            location_id = get_location_names_with_ids(["Hells First Kill - Annihilator Seraph"])
+            world.get_region("Global").add_locations(location_id, MetalHellsingerLocation)
+            if world.options.include_first_slaughter_checks:
+                location_id = get_location_names_with_ids(["Hells First Slaughter - Annihilator Seraph"])
+                world.get_region("Global").add_locations(location_id, MetalHellsingerLocation)
+
         if world.options.include_fury_combo_checks:
             all_locationtypes_to_add.append("Codex")
 
@@ -1106,7 +1117,6 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Bestiary Entry - Shield Cambion": LocationData(298, "Bestiary"),
         "Bestiary Entry - Siege Behemoth": LocationData(299, "Bestiary"),
         "Bestiary Entry - Void Stalker": LocationData(300, "Bestiary"),
-        "Bestiary Entry - Annihilator Seraph": LocationData(301, "Bestiary"),
         "First Miscellaneous - Ammostash": LocationData(1152, "FirstMiscellaneous"),
         "First Miscellaneous - Health Crystal": LocationData(1153, "FirstMiscellaneous"),
         "First Miscellaneous - Chaos Crystal": LocationData(1154, "FirstMiscellaneous"),
@@ -1136,7 +1146,6 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Hells First Kill - Shield Cambion": LocationData(1237, "FirstKill"),
         "Hells First Kill - Siege Behemoth": LocationData(1238, "FirstKill"),
         "Hells First Kill - Void Stalker": LocationData(1239, "FirstKill"),
-        "Hells First Kill - Annihilator Seraph": LocationData(1240, "FirstKill"),
         "Hells First Slaughter - Marionette": LocationData(1250, "FirstSlaughter"),
         "Hells First Slaughter - Cambion": LocationData(1251, "FirstSlaughter"),
         "Hells First Slaughter - Behemoth": LocationData(1252, "FirstSlaughter"),
@@ -1147,7 +1156,6 @@ location_region_mapping: dict[str, dict[str, LocationData]] = {
         "Hells First Slaughter - Shield Cambion": LocationData(1257, "FirstSlaughter"),
         "Hells First Slaughter - Siege Behemoth": LocationData(1258, "FirstSlaughter"),
         "Hells First Slaughter - Void Stalker": LocationData(1259, "FirstSlaughter"),
-        "Hells First Slaughter - Annihilator Seraph": LocationData(1260, "FirstSlaughter"),
     },
     "KillingWithRhythm Torment1": {
         "Killing with Rhythm: 1 - Achieve Bronze": LocationData(163, "TormentBronze"),
@@ -1499,3 +1507,6 @@ for region_name, location_group in location_region_mapping.items():
 location_name_to_id["First Miscellaneous - Infinite Jump"] = 1214
 location_name_to_id["Activate the Red Right Hands Ultimate for the first time"] = 1228
 location_name_to_id["Activate Telos' Ultimate for the first time"] = 1229
+location_name_to_id["Bestiary Entry - Annihilator Seraph"] = 301
+location_name_to_id["Hells First Kill - Annihilator Seraph"] = 1240
+location_name_to_id["Hells First Slaughter - Annihilator Seraph"] = 1260

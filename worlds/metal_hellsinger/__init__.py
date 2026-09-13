@@ -87,6 +87,7 @@ class MetalHellsingerWorld(CachedRuleBuilderWorld):
                 "required_hells_completion",
                 "regressive_difficulty",
                 "starting_difficulty",
+                "include_archdevil_difficulty",
                 "minimal_difficulty",
                 "hells_unlocks_as_progressive",
                 "require_aspect_for_boss_arena",

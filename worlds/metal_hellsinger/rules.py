@@ -219,9 +219,9 @@ HAS_DE_1 = Has("Hells") & HAS_DE_1_HELLS & HAS_DE_1_WEAPONS & ((IS_PROGRESSIVE_T
 HAS_DE_2 = Has("Hells") & HAS_DE_2_HELLS & HAS_DE_2_WEAPONS & ((IS_PROGRESSIVE_TORMENT & Has("Progressive Death's Edge", count=2)) | (IS_NOT_PROGRESSIVE_TORMENT & Has("Death's Edge: 2")))
 HAS_DE_3 = Has("Hells") & HAS_DE_3_HELLS & HAS_DE_3_WEAPONS & ((IS_PROGRESSIVE_TORMENT & Has("Progressive Death's Edge", count=3)) | (IS_NOT_PROGRESSIVE_TORMENT & Has("Death's Edge: 3")))
 
-HAS_UM_1_WEAPONS = REQUIRES_NO_TORMENT_WEAPONS | (REQUIRES_TORMENT_WEAPONS & HAS_TERMINUS_WITH_ULTIMATE & HAS_PERSEPHONE_WITH_ULTIMATE)
-HAS_UM_2_WEAPONS = REQUIRES_NO_TORMENT_WEAPONS | (REQUIRES_TORMENT_WEAPONS & HAS_TERMINUS_WITH_ULTIMATE & HAS_PERSEPHONE_WITH_ULTIMATE & HAS_HELLCROW_WITH_ULTIMATE)
-HAS_UM_3_WEAPONS = REQUIRES_NO_TORMENT_WEAPONS | (REQUIRES_TORMENT_WEAPONS & HAS_TERMINUS_WITH_ULTIMATE & HAS_PERSEPHONE_WITH_ULTIMATE & HAS_THE_HOUNDS_WITH_ULTIMATE)
+HAS_UM_1_WEAPONS = (REQUIRES_NO_TORMENT_WEAPONS & (IS_NOT_WEAPON_ULTIMATE_SEPARATE | ((HasAny("Terminus Ultimate", "Persephone Ultimate") & OUT_OF_LOGIC) | HasAll("Terminus Ultimate", "Persephone Ultimate")))) | (REQUIRES_TORMENT_WEAPONS & HAS_TERMINUS_WITH_ULTIMATE & HAS_PERSEPHONE_WITH_ULTIMATE)
+HAS_UM_2_WEAPONS = (REQUIRES_NO_TORMENT_WEAPONS & (IS_NOT_WEAPON_ULTIMATE_SEPARATE | ((HasAny("Terminus Ultimate", "Persephone Ultimate", "Hellcrow Ultimate") & OUT_OF_LOGIC) | (HasAll("Terminus Ultimate", "Persephone Ultimate") | HasAll("Terminus Ultimate", "Hellcrow Ultimate") | HasAll("Persephone Ultimate", "Hellcrow Ultimate"))))) | (REQUIRES_TORMENT_WEAPONS & HAS_TERMINUS_WITH_ULTIMATE & HAS_PERSEPHONE_WITH_ULTIMATE & HAS_HELLCROW_WITH_ULTIMATE)
+HAS_UM_3_WEAPONS = (REQUIRES_NO_TORMENT_WEAPONS & (IS_NOT_WEAPON_ULTIMATE_SEPARATE | ((HasAny("Terminus Ultimate", "Persephone Ultimate", "The Hounds Ultimate") & OUT_OF_LOGIC) | (HasAll("Terminus Ultimate", "Persephone Ultimate") | HasAll("Terminus Ultimate", "The Hounds Ultimate") | HasAll("Persephone Ultimate", "The Hounds Ultimate"))))) | (REQUIRES_TORMENT_WEAPONS & HAS_TERMINUS_WITH_ULTIMATE & HAS_PERSEPHONE_WITH_ULTIMATE & HAS_THE_HOUNDS_WITH_ULTIMATE)
 HAS_UM_1_HELLS = REQUIRE_NO_STAGE_OF_HELL | (REQUIRE_STAGE_OF_HELL & HAS_YHELM)
 HAS_UM_2_HELLS = REQUIRE_NO_STAGE_OF_HELL | (REQUIRE_STAGE_OF_HELL & HAS_NIHIL)
 HAS_UM_3_HELLS = REQUIRE_NO_STAGE_OF_HELL | (REQUIRE_STAGE_OF_HELL & HAS_ACHERON)
@@ -724,7 +724,6 @@ def set_all_location_rules(world: MetalHellsingerWorld) -> None:
     world.set_rule(world.get_location("Hells First Kill - Shield Cambion"), CAN_REACH_SHIELD_CAMBION)
     world.set_rule(world.get_location("Hells First Kill - Siege Behemoth"), CAN_REACH_SIEGE_BEHEMOTH)
     world.set_rule(world.get_location("Hells First Kill - Void Stalker"), CAN_REACH_VOID_STALKER)
-    world.set_rule(world.get_location("Hells First Kill - Annihilator Seraph"), CAN_REACH_ANNIHILATOR_SERAPH)
 
     world.set_rule(world.get_location("Bestiary Entry - Marionette"), HAS_TUTORIAL & HAS_BASE_MOVEMENT)
     world.set_rule(world.get_location("Bestiary Entry - Cambion"), HAS_VOKE | HAS_STYGIA)
@@ -736,12 +735,31 @@ def set_all_location_rules(world: MetalHellsingerWorld) -> None:
     world.set_rule(world.get_location("Bestiary Entry - Shield Cambion"), HAS_YHELM)
     world.set_rule(world.get_location("Bestiary Entry - Siege Behemoth"), CanReachRegion("Incaustis Arena4"))
     world.set_rule(world.get_location("Bestiary Entry - Void Stalker"), CanReachRegion("Nihil Arena3"))
-    world.set_rule(world.get_location("Bestiary Entry - Annihilator Seraph"), CanReachRegion("Voke Arena4") & (Has("Archdevil") | Has("Regressive Difficulty")))
 
     world.set_rule(world.get_location("Stygia - Next Multiplier in Arena 1 on pillar"), HAS_BASE_MOVEMENT)
     world.set_rule(world.get_location("Nihil - Max Multiplier in Arena 1"), HAS_BASE_MOVEMENT)
     world.set_rule(world.get_location("Sheol - Next Multiplier in Arena 2 on back Pillar"), HAS_BASE_MOVEMENT)
     world.set_rule(world.get_location("Sheol - Next Multiplier in Arena 3"), (HAS_DASH | HAS_DOUBLE_JUMP) | JUMP_OUT_OF_LOGIC)
+
+    if(world.options.include_first_slaughter_checks):
+        world.set_rule(world.get_location("Hells First Slaughter - Marionette"), HAS_SLAUGHTER & CAN_REACH_MARIONETTE)
+        world.set_rule(world.get_location("Hells First Slaughter - Cambion"), HAS_SLAUGHTER & CAN_REACH_CAMBION)
+        world.set_rule(world.get_location("Hells First Slaughter - Behemoth"), HAS_SLAUGHTER & CAN_REACH_BEHEMOTH)
+        world.set_rule(world.get_location("Hells First Slaughter - Stalker"), HAS_SLAUGHTER & CAN_REACH_STALKER)
+        world.set_rule(world.get_location("Hells First Slaughter - Eyeless"), HAS_SLAUGHTER & CAN_REACH_EYELESS)
+        world.set_rule(world.get_location("Hells First Slaughter - Hierophant"), HAS_SLAUGHTER & CAN_REACH_HIEROPHANT)
+        world.set_rule(world.get_location("Hells First Slaughter - Lesser Seraph"), HAS_SLAUGHTER & CAN_REACH_LESSER_SERAPH)
+        world.set_rule(world.get_location("Hells First Slaughter - Shield Cambion"), HAS_SLAUGHTER & CAN_REACH_SHIELD_CAMBION)
+        world.set_rule(world.get_location("Hells First Slaughter - Siege Behemoth"), HAS_SLAUGHTER & CAN_REACH_SIEGE_BEHEMOTH)
+        world.set_rule(world.get_location("Hells First Slaughter - Void Stalker"), HAS_SLAUGHTER & CAN_REACH_VOID_STALKER)
+
+    if world.options.regressive_difficulty or world.options.include_archdevil_difficulty:
+        world.set_rule(world.get_location("Bestiary Entry - Annihilator Seraph"), CanReachRegion("Voke Arena4") & (Has("Archdevil") | Has("Regressive Difficulty")))
+
+    if world.options.regressive_difficulty or world.options.include_archdevil_difficulty or world.options.archdevil_enemies_enabled:
+        world.set_rule(world.get_location("Hells First Kill - Annihilator Seraph"), CAN_REACH_ANNIHILATOR_SERAPH)
+        if world.options.include_first_slaughter_checks:
+            world.set_rule(world.get_location("Hells First Slaughter - Annihilator Seraph"), HAS_SLAUGHTER & CAN_REACH_ANNIHILATOR_SERAPH)
 
     if(world.options.include_fury_combo_checks):
         world.set_rule(world.get_location("Fury Combo - Styx Reload discovered"), (HAS_ANY_HELL & HAS_QUICK_RELOAD & HAS_DESTRUCTIBLE_HEALTH_CRYSTALS & HAS_RELOADABLE_WEAPON))
@@ -760,19 +778,6 @@ def set_all_location_rules(world: MetalHellsingerWorld) -> None:
         world.set_rule(world.get_location("Fury Combo - Lethal Cycle discovered"), (HAS_ANY_HELL & HasGroup("Weapon", count=3)))
         world.set_rule(world.get_location("Fury Combo - Kill Trio discovered"), HAS_ANY_HELL & (HasGroup("Weapon", count=2)| OUT_OF_LOGIC))
         world.set_rule(world.get_location("Fury Combo - Triple Dash discovered"), (HAS_ANY_HELL & HAS_DASH))
-
-    if(world.options.include_first_slaughter_checks):
-        world.set_rule(world.get_location("Hells First Slaughter - Marionette"), HAS_SLAUGHTER & CAN_REACH_MARIONETTE)
-        world.set_rule(world.get_location("Hells First Slaughter - Cambion"), HAS_SLAUGHTER & CAN_REACH_CAMBION)
-        world.set_rule(world.get_location("Hells First Slaughter - Behemoth"), HAS_SLAUGHTER & CAN_REACH_BEHEMOTH)
-        world.set_rule(world.get_location("Hells First Slaughter - Stalker"), HAS_SLAUGHTER & CAN_REACH_STALKER)
-        world.set_rule(world.get_location("Hells First Slaughter - Eyeless"), HAS_SLAUGHTER & CAN_REACH_EYELESS)
-        world.set_rule(world.get_location("Hells First Slaughter - Hierophant"), HAS_SLAUGHTER & CAN_REACH_HIEROPHANT)
-        world.set_rule(world.get_location("Hells First Slaughter - Lesser Seraph"), HAS_SLAUGHTER & CAN_REACH_LESSER_SERAPH)
-        world.set_rule(world.get_location("Hells First Slaughter - Shield Cambion"), HAS_SLAUGHTER & CAN_REACH_SHIELD_CAMBION)
-        world.set_rule(world.get_location("Hells First Slaughter - Siege Behemoth"), HAS_SLAUGHTER & CAN_REACH_SIEGE_BEHEMOTH)
-        world.set_rule(world.get_location("Hells First Slaughter - Void Stalker"), HAS_SLAUGHTER & CAN_REACH_VOID_STALKER)
-        world.set_rule(world.get_location("Hells First Slaughter - Annihilator Seraph"), HAS_SLAUGHTER & CAN_REACH_ANNIHILATOR_SERAPH)
 
     if(world.options.randomized_boons_enabled):
         world.set_rule(world.get_location("Voke - Boon Completion"), CanReachRegion("Voke Boss"))
